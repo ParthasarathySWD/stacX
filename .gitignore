@@ -1,0 +1,9 @@
+uploads/
+.well-known/
+application/logs/
+application/config/config.php
+application/config/email.php
+application/config/database.php
+Templates/Pdf/
+assets/OCR/OCRImages/
+.htaccess

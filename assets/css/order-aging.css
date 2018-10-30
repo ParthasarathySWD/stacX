@@ -1,0 +1,316 @@
+
+  .icon-container .icon1 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #FFB300;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon1 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon1:hover {
+      background-color: #FFD54F;
+    }
+    .icon-container .icon1:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon1 {
+      background-color: #FFD54F;
+    }
+    .icon-container:hover .icon1 span {
+      color: #ffffff;
+    }
+
+/*------------------------------------------------------------------
+  Icon 2
+*/
+
+  .icon-container .icon2 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #039BE5;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon2 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon2:hover {
+      background-color: #4FC3F7;
+    }
+    .icon-container .icon2:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon2 {
+      background-color: #4FC3F7;
+    }
+    .icon-container:hover .icon2 span {
+      color: #ffffff;
+    }
+/*------------------------------------------------------------------
+  Icon 3
+*/
+
+  .icon-container .icon3 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #00897B;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon3 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon3:hover {
+      background-color: #8bca9c;
+    }
+    .icon-container .icon3:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon3 {
+      background-color: #8bca9c;
+    }
+    .icon-container:hover .icon3 span {
+      color: #ffffff;
+    }
+
+/*------------------------------------------------------------------
+  Icon 4
+*/
+
+  .icon-container .icon4 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #6D4C41;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon4 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon4:hover {
+      background-color: #A1887F;
+    }
+    .icon-container .icon4:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon4 {
+      background-color: #A1887F;
+    }
+    .icon-container:hover .icon4 span {
+      color: #ffffff;
+    }
+
+
+/*------------------------------------------------------------------
+  Icon 4
+*/
+
+  .icon-container .icon5 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #FB8C00;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon5 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon5:hover {
+      background-color:#FFB74D;
+    }
+    .icon-container .icon5:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon5 {
+      background-color:#FFB74D;
+    }
+    .icon-container:hover .icon5 span {
+      color: #ffffff;
+    }
+
+
+/*------------------------------------------------------------------
+  Icon 6
+*/
+
+  .icon-container .icon6 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #5E35B1;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon6 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon6:hover {
+      background-color:#9575CD;
+    }
+    .icon-container .icon6:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon6 {
+      background-color:#9575CD;
+    }
+    .icon-container:hover .icon6 span {
+      color: #ffffff;
+    }
+
+
+/*------------------------------------------------------------------
+  Icon 7
+*/
+
+  .icon-container .icon7 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #7CB342;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon7 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon7:hover {
+      background-color:#AED581;
+    }
+    .icon-container .icon7:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon7 {
+      background-color:#AED581;
+    }
+    .icon-container:hover .icon7 span {
+      color: #ffffff;
+    }
+
+/*------------------------------------------------------------------
+  Icon 7
+*/
+
+  .icon-container .icon8 {
+      -webkit-transition: background-color 300ms ease-in-out;
+      -o-transition: background-color 300ms ease-in-out;
+      transition: background-color 300ms ease-in-out;
+      background-color: #00ACC1;
+      border-radius: 50%;
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      margin-right: 8px;
+      padding: 12px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .icon-container .icon8 span {
+      -webkit-transition: color 300ms ease-in-out;
+      -o-transition: color 300ms ease-in-out;
+      transition: color 300ms ease-in-out;
+      font-size: 25px;
+      color: #ffffff;
+    }
+    .icon-container .icon8:hover {
+      background-color:#4DD0E1;
+    }
+    .icon-container .icon8:hover span {
+      color: #ffffff;
+    }
+    .icon-container:hover .icon8 {
+      background-color:#4DD0E1;
+    }
+    .icon-container:hover .icon8 span {
+      color: #ffffff;
+    }
+
+
+
+/*------------------------------------------------------------------
+  Loader
+*/

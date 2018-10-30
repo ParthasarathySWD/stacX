@@ -1,0 +1,106 @@
+span.jq-dte {
+    display: inline-block;
+    position: relative;
+    padding: 4px;
+    /* margin: 1px; */
+    background-color: #ffffff;
+    width: 82%;
+    border-bottom: 1px solid #bfbfbf;
+    border-bottom-left-radius: 4px;
+}
+.jq-dte-month, .jq-dte-day{
+  width: 26% !important;
+}
+.jq-dte-year{
+  width: 40% !important;
+}
+
+span.jq-dte-inner {
+  border: none;
+  padding: 1px;
+  margin: 1px;
+  white-space: nowrap;
+  background-color: #ffffff;
+}
+
+span.jq-dte input {
+  border: none;
+  background-color: #ffffff;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  /*width: 30% !important;*/
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+span.jq-dte input.error {
+  background-color: #ff9999;
+  color: #000000;
+}
+
+span.jq-dte.readonly,
+span.jq-dte.readonly span.jq-dte-inner,
+span.jq-dte.readonly input {
+  background-color: #f2f2f2;
+  color: #666666;
+}
+
+span.jq-dte input.hint {
+  color: #999999;
+  font-size: 11px;
+}
+
+span.jq-dte span.separator {
+  color: #999999;
+}
+
+span.jq-dte span.jq-dte-tooltip {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 14px;
+  background-color: #f5f5b5;
+  border: 1px solid #666666;
+  margin: 0;
+  padding: 1px 3px;
+  line-height: 125%;
+  z-index: 99;
+}
+
+span.jq-dte span.jq-dte-errorbox {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 14px;
+  background-color: #e68d8d;
+  margin: 0;
+  padding: 5px;
+  line-height: 125%;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.175);
+  z-index: 9999; 
+}
+
+.calendar-icon{
+    padding: 6px 19px 6px 6px !important;
+    background-color: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px solid #bfbfbf !important;
+    border-bottom-right-radius: 4px !important;
+    float: right;
+    margin-left: -1px ! important;
+    margin-top: 1px;
+    color: #636363 ! important;
+}
+.calendar-icon span{
+   font-size: 14px;
+}
+.date-label{
+  top:2px !important;
+}
+.DtTmPickerNew{
+  display: inline-flex !important;
+}

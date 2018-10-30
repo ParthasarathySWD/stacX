@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+             @page {
+             header: html_MyCustomHeader;/* display <htmlpageheader name="MyCustomHeader"> on all pages */
+            footer: html_MyCustomFooter;/* display <htmlpagefooter name="MyCustomFooter"> on all pages */
+        }
+    @page { sheet-size: Letter; }
+
+   
+            div.noheaderfooter 
+            {
+                page: noheaderfooter;
+            }
+            div.noheader{
+                page: header;
+            }
+            div.nofooter
+            {
+                page: footer;
+            }
+            div.displayheader{
+                page:displayheader;
+            }
+            div.displayfooter{
+                page:displayfooter;
+            }
+
+        
+        @page {
+            margin-top:3.2cm;
+            margin-left:0cm;
+            margin-right:0cm;
+            margin-bottom:0cm;
+            
+            margin-header: 0cm; 
+            margin-footer: 0cm;
+        }
+
+            .align{
+                font-family: Calibri,'sans-serif';
+                font-size: 12px;
+            }  
+
+            p{
+                font-family: Calibri,'sans-serif';
+                font-size: 14px;
+            }
+
+
+            .margin{
+                margin-top: 3.2cm;
+                margin-left: 1.11cm;
+                margin-right: 1.43cm;
+                margin-bottom: 0cm;
+            }
+
+            .hr{
+                border:none;
+                border-bottom: 3px solid #fcc080;
+                margin-top: 10px;
+            }
+            
+        </style>
+    </head>
+
+    <body>
+
+    <htmlpageheader name="MyCustomHeader" >
+        <div>            
+            <img src="%%Imageurl%%" alt="ISGN LOGO" style="float: right;width:125pt;z-index: 9999;opacity: 0.5;margin-right: 20px; margin-top: 10px">
+        </div>
+        <div class="hr">            
+        </div>
+    </htmlpageheader>
+
+    <htmlpagefooter name="MyCustomFooter">
+        <div>            
+            <img src="assets\img\ISGN-Footer.png" style="opacity: 0.7;">
+        </div>
+
+        <!-- <div>
+            <table>
+                <tr>
+                    <td width="50%">ISGN Solutions ©2016 | Restricted | April 28, 2018 | 2</td>
+                    <td width="50%">www.isgnsolutions.com</td>
+                </tr>
+            </table>
+        </div> -->
+    </htmlpagefooter>
+
+        <div class="align margin">
+
+            <p>
+                <strong><u>COMMENTS:</u></strong>
+            </p>
+
+            <p>
+                <strong>STANDARD INSTRUCTIONS: </strong>
+            </p>
+
+
+            <p>
+                <strong>
+            Send search packages to email:        <a href="mailto:flreps@isgnsolutions.com">flreps@isgnsolutions.com</a>
+                    or Fax# 1-866-513-9477
+                </strong>
+                <br>
+
+                <strong>Upload Search packages to
+                    <a href="https://www.ordersportal.isgnsolutions.com/">
+                        https://www.ordersportal.isgnsolutions.com/
+                    </a>
+                </strong>
+            </p>
+
+
+            <p>
+                Please utilize ISGN website for any updates or delays and for submitting
+                your abstract information. The report should be returned to ISGN by due
+                date/time stated above. You will be paid as per the fee specified on this
+                form, if your fee differs from what is stated please call ISGN.
+            </p>
+
+            <p>
+                If the requested fee is approved, our representative will send you a new
+            order form showing the correct fee.    <strong style="color: red;">Unauthorized fees will not be paid.</strong>
+            </p>
+
+            <p>
+                <strong>CANCELLATION POLICY:</strong>
+                In case of cancellation notification will be communicated via call/email,
+                if we do not receive an acknowledgement or completed search by the end of
+                business the order will be considered cancelled and you will not be paid
+                for it.
+            </p>
+            <p>
+                <strong>SPECIAL INSTRUCTIONS:</strong>
+                All specific instructions will follow this page, please read all
+                instructions carefully. Any report submitted to ISGN that does not adhere
+                to these requirements will need to be corrected immediately with no
+                additional fees.
+            </p>
+            <p>
+                Additional charge for copies requested &amp; authorized by ISGN $_____
+                (Note: Standard deed copy is included in the abstractor fee)
+            </p>
+            <p>                _____________________________________________________________________________________<br>
+            
+                Your agreed fee for this order is $%%Fee%%.
+            </p>
+
+            <p>
+                <strong></strong>
+            </p>
+
+            <p>
+                Additional Fee: _________Reason: ____________ Approved By: _____________
+            </p>
+
+            <p>
+                <strong></strong>
+            </p>
+
+            <p>
+                For any queries related to Search, please contact our operations team
+                through email:
+                <a href="mailto:trackingteam@isgnsolutions.com">
+                    trackingteam@isgnsolutions.com
+                </a>
+                or call: 855-884-8001
+            </p>
+
+            <p>
+                <strong></strong>
+            </p>
+
+            <p>
+                For any payments or website login related queries, please contact our
+                vendor support through email:
+                <a href="mailto:vendorsupport@isgnsolutions.com">
+                    vendorsupport@isgnsolutions.com
+                </a>
+                or call: 855-884-8002
+            </p>
+
+        </div>
+    </body>
+</html>

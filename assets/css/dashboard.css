@@ -1,0 +1,141 @@
+
+.progress-bar{
+  background-color: #838383;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  border-color: #eee;
+  padding: 12px 1px;
+}
+#ordertable td{
+  text-align: center;
+}
+#ordertable td.text-primary{
+  text-align: left !important;
+}
+.pastdue{
+  background: #f44336;
+}
+.todaydue{
+  background:#ff9800;
+}
+.futuredue{
+  background:#00bcd4;
+}
+.dueicon{
+ width: 35px;
+ height: 35px;
+ border-radius: 50%;
+ color: #fff;
+ line-height: 35px;
+}
+.borderseparator{
+ border-bottom: 1px solid #f2f2f2;
+ margin-bottom: 5px;
+}
+.orderduediv{ 
+  max-width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  font-size: 14px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .14);
+}
+.filterdiv{
+  background: #f8f8f8;
+  padding: 20px;    
+  margin: 0 auto;
+}
+.stats i{
+  top: 2px;
+  right: 5px;
+}
+.text-primary {
+  color: #9c27b0!important;
+  font-weight: 500;
+}
+#ordertable th {
+  text-align: center;
+  min-width: 110px;
+  max-width: 110px; 
+  font-size: 15px; 
+}
+
+
+.table a {
+  color: #232323;
+  font-weight: 400;
+}
+.mt-15{
+  margin-top:15px !important;
+}
+.ordercnt h5{
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.icondiv i{
+  font-size: 20px;
+  color: #00bcd4;
+  text-shadow: 1px 1px #dedede;
+}
+.icondiv{
+  text-align: center;
+  margin-top: 20px;
+}
+#reportlist{
+  background: #3f51b5;
+  color: #fff;
+  border-radius: 0px;
+  margin: 0px;
+  line-height: 35px;
+}
+address, dl, ol, p, pre, ul {
+  margin-bottom: 15px;
+}
+.orderduetot{
+  margin-bottom:15px;
+  text-align: center;
+  font-size: 26px;
+}
+.card [class*=card-header-] .card-icon, .card [class*=card-header-] .card-text { 
+  margin-right: 0px !important;   
+}
+.orderspan  i{
+  font-size: 8px;
+  line-height: 20px;
+  color: #fff;
+}
+.orderspan {
+ width: 21px;
+ height: 21px;
+ /* margin-top: 5px; */
+ box-shadow: 2px 1px 3px 1px #dad9d9;
+ border-radius: 50%;
+ text-align: center;
+}
+.orderyellow{
+  background:#FFC107;
+}
+.orderpink{
+  background:#F50057;
+}
+.ordergreen{
+  background:#558B2F;
+}
+.orderblue{
+  background:#3F51B5;
+}
+.orderred{
+  background:#D50000;
+}
+.orderteal{
+  background:#673AB7;
+}
+.orderorange{
+  background:#E65100;
+}
+.orderskyblue{
+  background:#039BE5;
+}
+.progress {
+  height: 5px;
+  margin-bottom: 5px !important;
+}

@@ -1,0 +1,9 @@
+ <?php
+	$this->load->view('common/page_start'); 
+	$this->load->view('common/page_sidebar');	
+	$this->load->view('common/page_header');
+	$this->load->view($content);
+	$this->load->view('common/page_footer');
+	$this->load->view('common/page_script');
+	$this->load->view('common/page_end');
+?>
