@@ -109,7 +109,7 @@ class MY_Model extends CI_Model {
 		// Insert
 		if ($primarykey === NULL) {
 			if ( !empty($data) && ( is_array($data) || is_object($data) ) ) {
-				$this->db->insert($data);
+				$this->db->insert($_table_name, $data);
 				$id =  $this->db->insert_id();
 			}
 			return $id;			
@@ -149,4 +149,16 @@ class MY_Model extends CI_Model {
 		$diff = $date2_ts - $date1_ts;
 		return round($diff / 86400);
 	}
+
+	public function CreateDirectoryToPath($Path = '')
+	{
+		if (!file_exists($Path)) {
+			if (!mkdir($Path, 0777, true)) die('Unable to create directory');
+		}
+		chmod($Path, 0777);
+	}
+	
+
+
+
 }

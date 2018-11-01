@@ -27,7 +27,6 @@
 	}
 </style>
 
-<?php  $TATOrdersUIDs = GetTotalTATOrders(); ?>
 <div class="card">
 	<div class="card-header card-header-rose card-header-icon">
 		<div class="card-icon">
@@ -60,16 +59,9 @@
 							<div class="form-group bmd-form-group">
 								<label for="group" class="bmd-label-floating">Group <span class="mandatory"></span></label>
 								<select class="select2picker form-control" id="group"  name="group">                   
-									<?php if(count($groupsbyloggedid) == 1){ 
-										foreach ($groupsbyloggedid as $key => $group) { ?>
-										<option value="<?php echo $group->GroupUID; ?>" selected><?php echo $group->GroupName; ?></option>
-										<?php } 
-									}else{ ?>
-									<option value=""></option>
-									<?php
-									foreach ($groupsbyloggedid as $key => $group) { ?>
-									<option value="<?php echo $group->GroupUID; ?>"><?php echo $group->GroupName; ?></option>
-									<?php } }?>    
+									<option value="1">All</option>
+									<option value="2">Group 1</option>
+									<option value="3">Group 2</option>
 								</select>
 							</div>
 						</div>
@@ -77,26 +69,9 @@
 							<div class="form-group bmd-form-group">
 								<label for="group_products" class="bmd-label-floating">Product <span class="mandatory"></span></label>
 								<select class="select2picker form-control" id="group_products"  name="group_products">                   
-									<?php if(count($groupsbyloggedid) == 1){ 
-
-										$Product = $controller->get_product_by_group($groupsbyloggedid[0]->GroupUID);
-
-										if(count($Product) == 1){
-											foreach ($Product as $key => $value) { ?>
-											<option value="<?php echo $value->ProductUID; ?>" selected><?php echo $value->ProductName; ?></option>
-											<?php }
-										}else{ ?>
-										<option value=""></option>
-										<?php foreach ($Product as $key => $value) { ?>
-										<option value="<?php echo $value->ProductUID; ?>"><?php echo $value->ProductName; ?></option>
-										<?php }
-									}
-
-
-								}else{ ?>
-								<option value=""></option>
-
-								<?php } ?>  
+									<option value="1">All</option>
+									<option value="2">Group 1</option>
+									<option value="3">Group 2</option>
 							</select>
 						</div>
 					</div>
@@ -131,29 +106,10 @@
 						<div class="form-group bmd-form-group">
 							<label for="group_workflows" class="bmd-label-floating">Workflow <span class="mandatory"></span></label>
 							<select class="select2picker form-control" id="group_workflows"  name="group_workflows">                   
-								<?php if(count($groupsbyloggedid) == 1){ 
-
-									if(count($Product) == 1){
-										$workflowroles = $this->common_model->get_role_workflows();
-										$data = $controller->subproduct_by_group_product($groupsbyloggedid[0]->GroupUID,$Product[0]->ProductUID);
-
-										if(count($data[1]) > 0){
-											foreach ($data[1] as $key => $value) {
-												if (in_array($value->WorkflowModuleUID,$workflowroles)){
-
-													?>
-													<option value="<?php echo $value->WorkflowModuleUID; ?>"><?php echo $value->WorkflowModuleName; ?></option>
-
-													<?php } }
-												}
-											}
-											?>
-
-											<?php }else{ ?>
-											<option value=""></option>
-
-											<?php } ?> 
-										</select>
+									<option value="1">All</option>
+									<option value="2">Group 1</option>
+									<option value="3">Group 2</option>
+							</select>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -171,11 +127,8 @@
 								<table class="table table-striped display nowrap" id="myordertable"  cellspacing="0" width="100%"  style="width:100%">
 									<thead>
 										<tr>
-											<?php if(!$is_vendorlogin){ ?>
-												<th>Comp Name</th>
-												<th>Loan Number</th>
-											<?php } ?>
 											<th>Prop No</th>
+											<th>Customer </th>
 											<th>Borrower Name</th>
 											<th>Order Priority</th>
 											<th>Current Status</th>
@@ -193,18 +146,7 @@
 											<th>Due Date</th>
 											<th>Due Past</th>
 											<th>Ordered Date Time</th>
-											<?php if(!$is_vendorlogin){ ?>
-												<th>In-house/Abstractor</th>	
-												<th>Assignment Type</th>		
-												<th>Abstractor No</th>	
-												<th>Abstractor Company Name</th>
-											<?php } ?>
-											<?php if($permission->AbstractorFee != 0) { ?> 
-											<th>Abstractor Actual Cost</th>
-											<?php } ?>
-											<?php if($permission->CustomerPricing != 0) { ?>
 											<th>Customer Actual Cost</th>	
-											<?php } ?>				
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -222,107 +164,29 @@
 									<thead>
 										<tr >
 											<th class="no-sort">Order No</th>
-											<?php if(!$is_vendorlogin){ ?>
-											<th class="no-sort">Customer</th>
-											<?php } ?>
 											<th class="no-sort">Product/SubProduct</th>
 											<th class="no-sort">State</th>
 											<th class="no-sort">Assigned User</th>
 											<th class="no-sort">Status</th>
-											<?php if(!$is_vendorlogin){ ?>
-											<th class="no-sort">Workflow Module Completed</th>
-											<?php } ?>
 											<th class="no-sort">Ordered Date</th>
-											<?php if($is_vendorlogin){ ?>
-											<th class="no-sort">Assigned Date</th>
-											<?php } ?>
-
 											<th class="no-sort">Due Date</th>
 											<th class="no-sort">Actions</th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php foreach ($lastviewed_orders as $key => $value) {
-
-											$completed_workflowstatus = $this->Common_Model->completed_status_order($value['OrderUID']);
-											$res = $this->MyOrders_Model->getCancelOrderStatus($value['OrderUID']);
-											$Workflowassigned = $this->MyOrders_Model->get_Workflowassigned($value['OrderUID']);
-											$onholdworkflow = $this->Common_Model->get_onholdWorkflow($value['OrderUID']);
-
-											?>
-											<tr>
-
-												<?php 
-
-												if($value['PriorityName'] == 'ASAP'){?>
-
-												<td class="nowrap"><?php if(in_array($value['OrderUID'], $TATOrdersUIDs)) : echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span class="text-danger">'.$value['OrderNumber'].'</span></a>'; else: echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span>'.$value['OrderNumber'].'</span></a>'; endif;  ?> <img src="<?php echo base_url(); ?>assets/img/asap.png" title="<?php echo $value['PriorityName']; ?>" height="20px" width="20px"></td>
-
-												<?php } else if($value['PriorityName'] == 'Rush'){ ?>
-
-												<td class="nowrap"><?php if(in_array($value['OrderUID'], $TATOrdersUIDs)) : echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span class="text-danger">'.$value['OrderNumber'].'</span></a>'; else: echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span>'.$value['OrderNumber'].'</span></a>'; endif;  ?> <img src="<?php echo base_url(); ?>assets/img/rush.png" height="20px" title="<?php echo $value['PriorityName']; ?>" width="20px"></td>
-
-												<?php } else{ ?>
-
-												<td  class="nowrap"><?php if(in_array($value['OrderUID'], $TATOrdersUIDs)) : echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span class="text-danger">'.$value['OrderNumber'].'</span></a>'; else: echo '<a href="'.base_url('Order_Summary/index/'.$value['OrderUID']).'/1" class="text-primary ajaxload"><span>'.$value['OrderNumber'].'</span></a>'; endif;  ?></td>
-
-												<?php }?>
-												<?php if(!$is_vendorlogin){ ?>
-												<td><?php echo $value['CustomerNumber'].' / '.$value['CustomerName'];  ?></td>
-												<?php } ?>
-												<td><?php echo substr($value['ProductName'], 0, 1).'-'.$value['SubProductName'];  ?> </td>
-												<td><?php echo $value['PropertyStateCode']; ?></td>
-												<td><?php echo $this->MyOrders_Model->get_assigned_workflow_users($value['OrderUID'],$is_vendorlogin,$logged_details);  ?></td>
-
-												<td>
-													<?php if($onholdworkflow->WorkflowModuleName != '') {?>
-
-													<span class="btn btn-rounded btn-sm" style="font-size: 10px; color:#fff; background: #ff8600;"><?php echo $onholdworkflow->WorkflowModuleName; ?>-OnHold</span>
-
-													<?php }else{ ?>
-
-													<span class="btn btn-rounded btn-sm" style="font-size: 10px; color: #fff; background: <?php echo $value['StatusColor'];?>"><?php echo $value['StatusName']; ?></span>
-
-													<?php } ?>
-												</td>
-												<?php if(!$is_vendorlogin){ ?>
-												<td><?php echo $completed_workflowstatus->WorkflowModuleName; ?></td>
-												<td><?php echo $value['OrderEntryDatetime']; ?></td>
-												<td><?php echo $value['OrderDueDateTime']; ?></td>
-												<?php }else{ ?>
-												<td><span class="more"><?php echo $this->MyOrders_Model->get_vendor_ordered_datetime($value['OrderUID'],$is_vendorlogin,$logged_details); ?></span></td>
-												<td><span class="more"><?php echo $this->MyOrders_Model->get_vendor_assigned_datetime($value['OrderUID'],$is_vendorlogin,$logged_details); ?></span></td>
-												<td><span class="more"><?php echo $this->MyOrders_Model->get_vendor_due_datetime($value['OrderUID'],$is_vendorlogin,$logged_details); ?></span></td>
-												<?php } ?>
-												<td style="position:relative;">
-
-													<?php
-													if($Workflowassigned->WorkflowStatus == '0' && $this->Common_Model->check_order_is_assignedtouser($value['OrderUID']) > 0) { ?>
-													<button   data-OrderUID = '<?php echo $value['OrderUID']; ?>' class="btn btn-link btn-success btn-just-icon btn-xs acceptorder"><i class="icon-checkmark4"></i><div class="ripple-container"></div></button>
+									<?php for ($i=0; $i < 5; $i++) {   ?>
+										<tr>
+											<td class="no-sort">Order No</td>
+											<td class="no-sort">Product/SubProduct</td>
+											<td class="no-sort">State</td>
+											<td class="no-sort">Assigned User</td>
+											<td class="no-sort">Status</td>
+											<td class="no-sort">Ordered Date</td>
+											<td class="no-sort">Due Date</td>
+											<td class="no-sort">Actions</td>
 
 
-
-													<?php }else{ ?>
-													<div class="badgebar">
-														<?php 
-														$CustomerDelay = $this->Common_Model->GetCustomerDelayByOrder($value['OrderUID']);  
-														if($CustomerDelay==1)
-														{
-															echo '<span class="badge badge-danger cus-badge">C</span>';
-														}
-														?>
-														<a href="<?php echo base_url(); ?>Order_Summary/index/<?php echo $value['OrderUID']; ?>/1" class="btn btn-link btn-info btn-just-icon btn-xs ajaxload"><i class="icon-pencil"></i><div class="ripple-container"></div></a>
-
-
-														<?php if($this->Common_Model->CheckOrderCancelRole($this->loggedid) == 1){?>
-														<button data-OrderUID = "<?php echo $value['OrderUID']; ?>" class="btn btn-link btn-danger btn-just-icon btn-xs cancel_order"><i class="icon-cross2"></i><div class="ripple-container"></div></button>
-
-														<?php  }?>
-
-													</div>
-													<?php } ?>
-												</td>
-											</tr>
+										</tr>
 
 
 											<?php   }?>
@@ -827,6 +691,7 @@
 					});
 
 				});
+				
 
 			</script>
 

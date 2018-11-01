@@ -107,7 +107,7 @@ $autoload['helper'] = array('url','security');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('keywords', 'RoleTypes');
 
 /*
 | -------------------------------------------------------------------
@@ -120,8 +120,8 @@ $autoload['config'] = array();
 | NOTE: Do not include the "_lang" part of your file.  For example
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
-*/
-$autoload['language'] = array();
+ */
+$autoload['language'] = array('Keywords');
 
 /*
 | -------------------------------------------------------------------
@@ -135,5 +135,5 @@ $autoload['language'] = array();
 | in the controller:
 |
 |	$autoload['model'] = array('first_model' => 'first');
-*/
+ */
 $autoload['model'] = array('Common_Model');

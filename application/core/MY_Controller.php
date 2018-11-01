@@ -10,7 +10,16 @@ class MY_Controller extends MX_Controller {
 			$allowed = array('Login');
 			if ( ! in_array($this->router->fetch_class(), $allowed))
 			{
-				redirect(base_url('Login'));
+				if ($this->input->is_ajax_request()) {
+				?>
+					<script>
+						window.location.href='<?php echo base_url("Login"); ?>';
+					</script>
+				<?php
+				}
+				else{
+					redirect(base_url('Login'));
+				}
 			}
 		}
 		else{

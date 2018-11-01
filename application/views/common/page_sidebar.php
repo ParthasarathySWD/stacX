@@ -62,6 +62,12 @@
             <p> Dashboard </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link ajaxload" href="<?php echo base_url(); ?>MyOrders">
+            <i class="icon-folder-check"></i>
+            <p>My Orders</p>
+          </a>
+        </li>  
        </ul>                
   </div>
   </div>

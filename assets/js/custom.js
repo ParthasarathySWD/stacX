@@ -504,6 +504,124 @@ $(document).ready(function() {
 });
 
 
+/*GENERAL FUNCTIONS*/
+function callselect2(){
+  $(".select2picker").select2({
+    tags: false,
+    theme: "bootstrap",
+  });
+}
+
+function callselect2byclass(byclass){
+  $('.'+byclass).select2({
+    tags: false,
+    theme: "bootstrap",
+  });
+}
+
+function callselect2byid(byid){
+  $('#'+byid).select2({
+    tags: false,
+    theme: "bootstrap",
+  });
+}
+
+function myfunction(){
+ $.notify(
+ {
+  icon:"icon-bell-check",
+  message:"Record deleted successfully"
+},
+{
+  type:"success",
+  delay : 1000 
+});
+}
+
+function ChangeCustomerFileDetails(file, data) {
+
+  fsize  = bytesToSize(file.size);   
+  var fname = file.name;    
+  var appeddiv  = "<div class='row filediv'><div class='col-md-2'><p class='mb-0'><strong>"+fname+"</strong></p><p><strong>"+fsize+"</strong></p></div><div class='col-md-10'><a href='"+data.URL+"' target='_blank' class='btn btn-sm btn-outline-info defaultfileview'><i class='icon-eye'></i></a><button class='btn btn-outline-danger btn-sm customerdocumentremove_server'><i class='icon-x'></i></button></div></div>";
+  $(".uploadedfile").html(appeddiv);   
+}
+
+function ShowViewDocumentLink(URL, currentform) {
+  var view='<a class="btn btn-link btn-dribbble" href="'+URL+'" target="_blank"><i class="icon-eye"></i> View Document</a>'
+  var file= $(currentform).find('.viewdocumentcontainer');
+  $(currentform).find('.removeabstractordoc').addClass('removeabstractordocserver');
+  $(currentform).find('.removeabstractordoc').removeClass('removeabstractordoc');
+  $(currentform).find('.viewdocumentcontainer').html(view);
+}
+
+function ResetProgress(progress) {
+  $(progress).width(0 + '%');
+  $(progress).text('');
+  $(progress).parent('.progress').hide(); 
+}
+
+function bytesToSize(bytes) {
+ var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+ if (bytes == 0) return '0 Byte';
+ var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+ return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+};
+function findParentForm(elem){ 
+  var parent = elem.parentNode; 
+  if(parent && parent.tagName != 'FORM'){
+    parent = findParentForm(parent);
+  }
+  return parent;
+}
+
+function getParentForm( elem )
+{
+  var parentForm = findParentForm(elem);
+  if(parentForm){
+    return parentForm;
+  }else{
+    alert("unable to locate parent Form");
+  }
+
+}
+
+function findParentElement(elem, parentClass){ 
+  var parent = elem.parentNode; 
+  var classlist = parent.classList;
+  var ispresent=$.inArray(parentClass, classlist);
+  if(parent && ispresent ==-1){
+    parent = findParentElement(parent, parentClass);
+  }
+  return parent;
+}
+
+function getParentByClass(elem, parentClass) {
+  var parentElement=findParentElement(elem, parentClass);
+  if (parentElement) {
+    return parentElement;
+  }
+}
+
+function calcTime(city, offset) {
+    // create Date object for current location
+    var d = new Date();
+
+    // convert to msec
+    // subtract local time zone offset
+    // get UTC time in msec
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+    // create new Date object for different city
+    // using supplied offset
+    var nd = new Date(utc + (3600000*offset));
+
+    return nd.toISOString().slice(0,10);
+    // return time as a string
+    return "The local time for city "+ city +" is "+ nd.toLocaleString();
+  }
+
+// alert(calcTime('Caribbean', '-5'));
+
 
 function bytesToSize(bytes) {
  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -573,6 +691,27 @@ function ResetProgress(progress) {
   $(progress).text('');
   $(progress).parent('.progress').hide(); 
   $(progress).find('span').text(''); 
+}
+
+function callselect2() {
+  $(".select2picker").select2({
+    tags: false,
+    theme: "bootstrap",
+  });
+}
+
+function callselect2byclass(byclass) {
+  $('.' + byclass).select2({
+    tags: false,
+    theme: "bootstrap",
+  });
+}
+
+function callselect2byid(byid) {
+  $('#' + byid).select2({
+    tags: false,
+    theme: "bootstrap",
+  });
 }
 
 

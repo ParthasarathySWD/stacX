@@ -17,7 +17,6 @@ demo = {
            });
            marker.setMap(map);
        },
-
        initContactUs2Map: function(){
            var lat = 44.433530;
            var long = 26.093928;
@@ -909,4 +908,8 @@ demo = {
 
     }
 
+}
+
+function newFunction() {
+    return "method";
 }
