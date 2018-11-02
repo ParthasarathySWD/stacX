@@ -636,140 +636,7 @@
 
 		/* ---- BULK ORDER ENTRY STARTS ----*/
 
-		//preview bulk entry
-		$('#preview').click(function(event) {
-			event.preventDefault();
-			button = $(this);
-			button_val = $(this).val();
-			button_text = $(this).html();
-			
-			var file_data = $('#filebulk_entry').prop('files')[0];
-			var form_data = new FormData();
-			form_data.append('file', file_data);
-			form_data.append('CustomerUID', $('#bulk_Customers').val());
-			form_data.append('ProductUID', $('#bulk_products').val());
-			form_data.append('SubProductUID', $('#bulk_subproducts').val());
-			
-			
-			
-			$.ajax({
-				type: "POST",
-				url: '<?php echo base_url(); ?>orderentry/preview_bulkentry',
-				data: form_data,
-				processData: false,
-				contentType: false,
-				cache:false,
-				
-				beforeSend: function(){
-					$('.spinnerclass').addClass("be-loading-active");  
-					button.attr("disabled", true);
-					button.html('Loading ...'); 
-				},
-				success: function(data)
-				{ 
-					$('.spinnerclass').removeClass("be-loading-active");
-					$('#preview-table').html('');
-					try {
-						obj = JSON.parse(data);
-						$.gritter.add({
-							title: obj['message'],
-							class_name: 'color danger',
-							fade: true,
-							time: 1000,
-							speed:'fast',
-							
-						});
-					} catch (e) {
-						$('#imported-table').html('');
-						$('#preview-table').html(data);
-					}
-					
-					button.html('Preview');
-					button.removeAttr("disabled");
-					
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log(errorThrown);
-					
-				},
-				failure: function (jqXHR, textStatus, errorThrown) {
-					
-					console.log(errorThrown);
-					
-				},
-			});
-		});
 
-
-
-		//save bulk entry
-		$('#bulk_save').click(function(event) {
-			event.preventDefault();
-			button = $(this);
-			button_val = $(this).val();
-			button_text = $(this).html();
-			var file_data = $('#filebulk_entry').prop('files')[0];
-			var form_data = new FormData();
-			form_data.append('file', file_data);
-			form_data.append('CustomerUID', $('#bulk_Customers').val());
-			form_data.append('ProductUID', $('#bulk_products').val());
-			form_data.append('SubProductUID', $('#bulk_subproducts').val());
-			form_data.append('ProjectUID', $('#bulk_projects').val());
-			
-			$.ajax({
-				type: "POST",
-				url: '<?php echo base_url(); ?>orderentry/save_bulkentry',
-				data: form_data,
-				processData: false,
-				contentType: false,
-				cache:false,
-				beforeSend: function(){
-					$('.spinnerclass').addClass("be-loading-active");
-					button.attr("disabled", true);
-					button.html('Loading ...'); 
-				},
-				success: function(data)
-				{
-					button.html('save'); 
-					button.removeAttr('disabled');
-					$('.spinnerclass').removeClass("be-loading-active");
-					try {
-						obj = JSON.parse(data);
-						$.gritter.add({
-							title: obj['message'],
-							// text: data['message'],
-							class_name: 'color danger',
-							fade: true,
-							time: 1000,
-							speed:'fast',
-							
-						});
-					} catch (e) {
-						$('#preview-table').html('');
-						$('#imported-table').html(data);
-						// 	$('#modal-data').html(data); 
-						// 	$('#md-modal').modal('show');
-						// 	$("#md-modal").on("hidden.bs.modal", function () {
-							// 	window.location.replace("<?php echo base_url(); ?>orderentry");
-							// });
-						}
-						$('.dropify-clear').click();
-						
-						
-						
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						console.log(errorThrown);
-						
-					},
-					failure: function (jqXHR, textStatus, errorThrown) {
-						
-						console.log(errorThrown);
-						
-					},
-				});
-			});
-			
 			
 			//preview bulk entry
 			$('#text_preview').click(function(event) {
@@ -779,17 +646,16 @@
 				button_text = $(this).html();
 				
 				var CustomerUID = $('#bulk_Customers').val();
-				var ProductUID = $('#bulk_products').val();
-				var SubProductUID = $('#bulk_subproducts').val();
+				var ProjectUID = $('#bulk_ProjectUID').val();
 				
 				
-				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProductUID=' + ProductUID+ '&SubProductUID=' + SubProductUID;
+				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProjectUID=' + ProjectUID;
 				
 				$.ajax({
 					type: "POST",
 					url: '<?php echo base_url(); ?>orderentry/text_preview_bulkentry',
 					data: formData,
-					// dataType:'json',
+					dataType:'json',
 					beforeSend: function(){
 						$('.spinnerclass').addClass("be-loading-active");
 						button.attr("disabled", true);
@@ -802,22 +668,12 @@
 						
 						button.removeAttr("disabled");
 						
-						try {
-							obj = JSON.parse(data);
-							$.gritter.add({
-								title: obj['message'],
-								class_name: 'color danger',
-								fade: true,
-								time: 1000,
-								speed:'fast',
-								
-							});
-						} catch (e) {
-							$('#preview-table').html(data);
-							
-							
+						if (data.error==1) {
+							$.notify({icon:"icon-bell-check",message:data['message']},{type:"danger",delay:3000 });
 						}
-						
+						else if (data.error==0) {
+							$('#preview-table').html(data.html);
+						}						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log(errorThrown);
@@ -838,16 +694,18 @@
 				button = $(this);
 				button_val = $(this).val();
 				button_text = $(this).html();
-				var CustomerUID = $('#bulk_Customers').val();
-				var ProductUID = $('#bulk_products').val();
-				var SubProductUID = $('#bulk_subproducts').val();
-				var ProjectUID = $('#bulk_projects').val();
 				
-				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProductUID=' + ProductUID+ '&SubProductUID=' + SubProductUID+ '&ProjectUID=' + ProjectUID;
+				var CustomerUID = $('#bulk_Customers').val();
+				var ProjectUID = $('#bulk_ProjectUID').val();
+				
+				
+				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProjectUID=' + ProjectUID;
+				
 				$.ajax({
 					type: "POST",
 					url: '<?php echo base_url(); ?>orderentry/text_save_bulkentry',
 					data: formData,
+					dataType: 'json',
 					beforeSend: function(){
 						$('.spinnerclass').addClass("be-loading-active");
 						button.attr("disabled", true);
@@ -857,45 +715,161 @@
 					{
 						button.html('save'); 
 						button.removeAttr('disabled');
-						$('.spinnerclass').removeClass("be-loading-active");
 						
-						try {
-							obj = JSON.parse(data);
-							$.gritter.add({
-								title: obj['message'],
-								// text: data['message'],
-								class_name: 'color danger',
-								fade: true,
-								time: 1000,
-								speed:'fast',
-								
-							});
-						} catch (e) {
+						if (data.error==1) {
+							$.notify({icon:"icon-bell-check",message:data['message']},{type:"danger",delay:3000 });
+						}
+						else if (data.error==0) {
+							$('#imported-table').html(data.html);
 							$('#preview-table').html('');
-							$('#imported-table').html(data);
-							// $('#modal-data').html(data); 
-							// $('#md-modal').modal('show');
-							// $("#md-modal").on("hidden.bs.modal", function () {
-								// 	window.location.replace("<?php echo base_url(); ?>orderentry");
-								// });
-							}
-							
-							
-							
-						},
-						error: function (jqXHR, textStatus, errorThrown) {
-							console.log(errorThrown);
-							
-						},
-						failure: function (jqXHR, textStatus, errorThrown) {
-							
-							console.log(errorThrown);
-							
-						},
+						}						
+
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(errorThrown);
+						
+					},
+					failure: function (jqXHR, textStatus, errorThrown) {
+						
+						console.log(errorThrown);
+						
+					},
 					});
 				});
 				
+				/* Excel Bulk Import Order starts */
+	
+				//preview bulk entry
+				$('#preview').click(function(event) {
+					event.preventDefault();
+					button = $(this);
+					button_val = $(this).val();
+					button_text = $(this).html();
 
+					var file_data = $('#filebulk_entry').prop('files')[0];
+					var form_data = new FormData();
+					form_data.append('file', file_data);
+					form_data.append('CustomerUID', $('#bulk_Customers').val());
+					form_data.append('ProjectUID', $('#bulk_ProjectUID').val());
+
+
+
+					$.ajax({
+						type: "POST",
+						url: '<?php echo base_url(); ?>Orderentry/preview_bulkentry',
+						data: form_data,
+						processData: false,
+						contentType: false,
+						cache:false,
+
+						beforeSend: function(){
+							$('.spinnerclass').addClass("be-loading-active");  
+							button.attr("disabled", true);
+							button.html('Loading ...'); 
+						},
+						success: function(data)
+						{ 
+							$('.spinnerclass').removeClass("be-loading-active");
+							$('#preview-table').html('');
+							
+							if (data.error==1) {
+								$.notify({icon:"icon-bell-check",message:data['message']},{type:"danger",delay:3000 });
+							}
+							else if (data.error==0) {
+								$('#imported-table').html(data.html);
+								$('#preview-table').html('');
+							}						
+
+
+							button.html('Preview');
+							button.removeAttr("disabled");
+
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							console.log(errorThrown);
+
+						},
+						failure: function (jqXHR, textStatus, errorThrown) {
+
+							console.log(errorThrown);
+
+						},
+					});
+				});
+
+
+				//save bulk entry
+				$('#bulk_save').click(function(event) {
+					event.preventDefault();
+					button = $(this);
+					button_val = $(this).val();
+					button_text = $(this).html();
+					var file_data = $('#filebulk_entry').prop('files')[0];
+					var form_data = new FormData();
+					form_data.append('file', file_data);
+					form_data.append('CustomerUID', $('#bulk_Customers').val());
+					form_data.append('ProductUID', $('#bulk_products').val());
+					form_data.append('SubProductUID', $('#bulk_subproducts').val());
+					form_data.append('ProjectUID', $('#bulk_projects').val());
+					
+					$.ajax({
+						type: "POST",
+						url: '<?php echo base_url(); ?>Orderentry/save_bulkentry',
+						data: form_data,
+						processData: false,
+						contentType: false,
+						cache:false,
+						beforeSend: function(){
+							$('.spinnerclass').addClass("be-loading-active");
+							button.attr("disabled", true);
+							button.html('Loading ...'); 
+						},
+						success: function(data)
+						{
+							button.html('save'); 
+							button.removeAttr('disabled');
+							$('.spinnerclass').removeClass("be-loading-active");
+							try {
+								obj = JSON.parse(data);
+								$.gritter.add({
+									title: obj['message'],
+									// text: data['message'],
+									class_name: 'color danger',
+									fade: true,
+									time: 1000,
+									speed:'fast',
+									
+								});
+							} catch (e) {
+								$('#preview-table').html('');
+								$('#imported-table').html(data);
+								// 	$('#modal-data').html(data); 
+								// 	$('#md-modal').modal('show');
+								// 	$("#md-modal").on("hidden.bs.modal", function () {
+									// 	window.location.replace("<?php echo base_url(); ?>orderentry");
+									// });
+								}
+								$('.dropify-clear').click();
+								
+								
+								
+							},
+							error: function (jqXHR, textStatus, errorThrown) {
+								console.log(errorThrown);
+								
+							},
+							failure: function (jqXHR, textStatus, errorThrown) {
+								
+								console.log(errorThrown);
+								
+							},
+						});
+					});
+					
+
+
+				/* Excel Bulk Import Order ends */
 
 		/* ---- BULK ORDER ENTRY ENDS ----*/
 

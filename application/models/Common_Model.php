@@ -13,27 +13,27 @@ class Common_Model extends MY_Model {
 		$this->db->where('CustomerUID', $CustomerUID);
 		$this->db->join('mCustomer', 'mCustomer.CustomerUID = mProjectCustomer.CustomerUID', 'left');
 		
-		$this->db->get()->result();
+		return $this->db->get()->result();
 	}
 
 	public function GetCustomerandProject_row($CustomerUID, $ProjectUID)
 	{
-		$this->db->select('mProjectCustomer.CustomerUID, mProjectCustomer.ProjectUID, mProjectCustomer.ProjectName, mCustomer.CustomerName')->from('mProjectCustomer');
+		$this->db->select('mProjectCustomer.CustomerUID, mProjectCustomer.ProjectUID, mProjectCustomer.ProjectName, mCustomer.CustomerName, mProjectCustomer.Priority')->from('mProjectCustomer');
 		$this->db->join('mCustomer', 'mCustomer.CustomerUID = mProjectCustomer.CustomerUID', 'left');
 		$this->db->where('mProjectCustomer.CustomerUID', $CustomerUID);
 		$this->db->where('mProjectCustomer.ProjectUID', $ProjectUID);
 		
-		$this->db->get()->row();
+		return $this->db->get()->row();
 	}
 
 	public function GetCustomerandProject_rowByName($CustomerUID, $ProjectName)
 	{
-		$this->db->select('mProjectCustomer.CustomerUID, mProjectCustomer.ProjectUID, mProjectCustomer.ProjectName, mCustomer.CustomerName')->from('mProjectCustomer');
+		$this->db->select('mProjectCustomer.CustomerUID, mProjectCustomer.ProjectUID, mProjectCustomer.ProjectName, mCustomer.CustomerName, mProjectCustomer.Priority')->from('mProjectCustomer');
 		$this->db->join('mCustomer', 'mCustomer.CustomerUID = mProjectCustomer.CustomerUID', 'left');
 		$this->db->where('mProjectCustomer.CustomerUID', $CustomerUID);
 		$this->db->where('mProjectCustomer.ProjectName', $ProjectName);
 		
-		$this->db->get()->row();
+		return $this->db->get()->row();
 	}
 
 
