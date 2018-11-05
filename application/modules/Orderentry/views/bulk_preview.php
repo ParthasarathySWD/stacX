@@ -1,6 +1,6 @@
-			<div class="col-md-12 pd-0">
+			<!-- <div class="col-md-12 pd-0">
 				<h4 class="sectionhead"><i class="icon-checkmark4 headericon"></i>Import Data Preview</h4>	
-			</div>
+			</div> -->
 			<div class="text-right">
 				<!-- <span class="badge badge-pill" style="background-color: #AA00FF;">Borrower</span> -->
 				<span class="badge badge-pill" style="background-color: #BDA601;">Zipcode</span>
@@ -16,27 +16,13 @@
 					<table class="table table-striped table-hover table-format nowrap"  id="table-bulkorder">
 						<thead>
 							<tr>
-								<th>Customer/Client</th>
-								<th>Project</th>
-								<th>Priority</th>
-								<th>Loan Number</th>
-								<th>Alt Order No</th>
-								<th>Property Address</th>
-								<th>Property City</th>
-								<th>Property County</th>
-								<th>Property State</th>
-								<th>Property Zip Code</th>
-
-
-								<?php for ($i = 1; $i <= $tableheadcount; $i++) { ?>
-									<!-- <th>BorrowerName</th>
-									<th>Email</th>
-									<th>Home No</th>
-									<th>Work No</th>
-									<th>Cell No</th>
-									<th>Social No</th> -->
-								<?php 
-						} ?>
+							<?php 	
+							
+							foreach ($headingsArray as $key => $value) {
+								?><th><?php echo $value; ?></th><?php
+							}
+							
+							?>
 
 							</tr>
 						</thead>
@@ -56,7 +42,7 @@
 				//for missing fields
 				if (count($arrayCode[$i]) >= $field_count) {
 					
-					if ((count($arrayCode[$i]) + 1) % 11 != 0) {
+					if ((count($arrayCode[$i]) + 1) % ($field_count + 1) != 0) {
 						?> <tr style="background-color: #757575; color: #fff;"> <?php 
 						foreach ($arrayCode[$i] as $key => $value) {
 							
@@ -75,12 +61,12 @@
 							
 							
 							
-							$CityName = $a[6];
+							$CityName = $a[5];
 							
-							$StateCode = $a[8];
-							$Zipcode = $a[9];
+							$StateCode = $a[7];
+							$Zipcode = $a[6];
 							
-							$CountyName = $a[7];
+							$CountyName = $a[5];
 							
 							
 							
@@ -193,3 +179,5 @@
 			</tbody>
 			
 			</table>
+		</div>
+	</div>

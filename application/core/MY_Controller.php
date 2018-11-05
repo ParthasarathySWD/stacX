@@ -16,6 +16,7 @@ class MY_Controller extends MX_Controller {
 						window.location.href='<?php echo base_url("Login"); ?>';
 					</script>
 				<?php
+				exit;
 				}
 				else{
 					redirect(base_url('Login'));
