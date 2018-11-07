@@ -124,7 +124,7 @@ class OrderEntry extends MY_Controller {
 			$duplicate_row = 0;
 			$column_empty = 0;
 			$element_empty = 0;
-
+			$error = 0;
 
 			$CustomerUID = $this->input->post('CustomerUID');
 			$ProjectUID = $this->input->post('ProjectUID');
@@ -222,14 +222,15 @@ class OrderEntry extends MY_Controller {
 			foreach ($arrayCode as $i => $a) {
 
 				$count = count($a);
-				$field_count = 9;
+				$field_count = 10;
 
 					//for missing fields
 				if (count($arrayCode[$i]) >= $field_count) {
 
-					if ((count($arrayCode[$i]) + 1) % 9 != 0) {
+					if ((count($arrayCode[$i])) % $field_count != 0) {
 
 						$error = $error + 1;
+						array_push($FailedData, $arrayCode[$i]);
 
 					} else {
 
@@ -293,11 +294,31 @@ class OrderEntry extends MY_Controller {
 								$a['result']=$result;
 								if (!empty($result) && isset($result['OrderUID'])) {
 									$InsertedOrderUID[] = $result['OrderUID'];
-								}
 
-								if (is_array($result) && !empty($result['OrderUID'])){
+									$SuccessData[] = $a;
 
-									$SuccessData[]=$a;
+									$Path = 'uploads/OrderDocumentPath/' . $result['OrderNumber'] . '/';
+									$this->Orderentrymodel->CreateDirectoryToPath($Path);
+
+									// Executes entire block when file is uploaded.
+									foreach ($_FILES['MIME_FILES']['name'] as $key => $value) {
+										$dotposition = strripos($value, '.');
+										$documentname = substr($value, 0, $dotposition);
+
+										if ($documentname == $a[2]) {
+											$this->NormalFileUpload($_FILES['MIME_FILES']['tmp_name'][$key], $Path, $result['OrderUID']);
+
+											$tDocuments['DocumentName'] = $value;
+											$tDocuments['DocumentURL'] = $Path . $value;
+											$tDocuments['OrderUID'] = $result['OrderUID'];
+											$tDocuments['IsStacking'] = 1;
+											$tDocuments['UploadedDateTime'] = date('Y-m-d H:i:s');
+											$tDocuments['UploadedByUserUID'] = $this->loggedid;
+											$this->Orderentrymodel->save('tDocuments', $tDocuments);
+
+										}
+									}
+
 								}else {
 									$error = $error + 1;
 									array_push($FailedData, $arrayCode[$i]);
@@ -345,7 +366,8 @@ class OrderEntry extends MY_Controller {
 			$duplicate_row = 0;
 			$column_empty = 0;
 			$element_empty = 0;
-			
+			$filenames = $this->input->post('FILE_NAMES');
+
 			
 			$CustomerUID = $this->input->post('CustomerUID');
 			$ProjectUID = $this->input->post('ProjectUID');
@@ -388,11 +410,13 @@ class OrderEntry extends MY_Controller {
 			
 			
 			$ProjectCheck = [];
+			$FileUploadPreview = [];
+			
 			
 			foreach ($arrayCode as $i => $v) {
-
+				
 				$ProjectCheck[$i] = false;
-
+				
 				$msubproducts = array();
 				
 				
@@ -412,6 +436,33 @@ class OrderEntry extends MY_Controller {
 					$ProjectCheck[$i] = false;
 				}
 
+				$is_available = false;
+					if (!empty($filenames)) {
+						
+						foreach ($filenames as $key => $filename) {
+							
+							$LoanNumber = $v[2];
+							$arraycount = count($v);
+							
+							$dotposition = strripos($filename, '.');
+							$documentname = substr($filename, 0, $dotposition);
+							
+							if ($LoanNumber == $documentname) {
+							$is_available = true;
+							$obj = new stdClass();
+							$obj->LoanNumber = $LoanNumber;
+							$obj->DocumentName = $filename;
+							$FileUploadPreview[] = $obj;
+						}
+					}
+					
+				}
+				if ($is_available) {
+					$arrayCode[$i][] = 'AVAILABLE';
+				} else {
+					$arrayCode[$i][] = 'NOT AVAILABLE';
+				}
+
 
 			}
 			
@@ -426,7 +477,7 @@ class OrderEntry extends MY_Controller {
 				}
 			}
 			
-			$headingsArray = ['Customer/Client','Project','Loan Number','Alt Order No','Property Address','Property City','Property County','Property State','Property Zip Code'];
+			$headingsArray = ['Customer/Client','Project','Loan Number','Alt Order No','Property Address','Property City','Property County','Property State','Property Zip Code','FileAvailable'];
 
 			$tableheadcount = $headingcount - 3;
 			for ($i = 1; $i <= $tableheadcount; $i++) {
@@ -441,11 +492,10 @@ class OrderEntry extends MY_Controller {
 			$data['headingsArray']=$headingsArray;
 
 			$preview = $this->load->view('bulk_preview', $data, true);
+			$filepreview = $this->load->view('bulk_uploade_filepreview', ['FileUploadPreview' => $FileUploadPreview], true);
 
-			echo json_encode(array('error'=>0, 'html'=>$preview));
-			?>
-
-			<?php
+			echo json_encode(array('error' => 0, 'html' => $preview, 'filehtml' => $filepreview));
+			exit;
 			
 		} else {
 			echo json_encode(array('error' => '1', 'message' => 'Please Fill the Required Field'));

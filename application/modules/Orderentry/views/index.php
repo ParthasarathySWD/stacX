@@ -335,6 +335,39 @@
 						</div>
 
 					</form>
+					<div class="col-md-12">
+						<div class="col-md-12 text-left">									
+							<button type="button" class="btn btn-dribbble btn-sm btn-github" id="btn_text_multiplefile_upload_toggle"><i class="icon-upload4 pr-10"></i>Upload Image(s)</button>
+						</div>
+						<div class="col-md-12 mt-20" style="display: none;" id="text_multiplefile_upload">
+							<input type="file" id="multiplefileupload"  class="dropify" name="multiplefileupload" webkitdirectory mozdirectory msdirectory odirectory directory multiple>
+								<div class="progress progress-line-info" id="bulk_text_orderentry-progressupload" style="display:none; height: 22px;">
+									<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:0%; height: 21px;">
+										<span class="sr-only">0% Complete</span>
+									</div>
+								</div>
+
+								<div class="table-responsive">
+									<table class="table table-bordered" id="TextDocumentPreviewTable">
+										<thead class="text-primary">
+											<th>
+												Document Name	
+											</th>
+											<th>
+												Uploaded DateTime
+											</th>
+											<th>
+												Action
+											</th>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+
+						</div>
+					</div>	
 				</div>
 
 				<div class="row fileentry mt-10" style="display: none;" >
@@ -367,7 +400,7 @@
 						</div>
 						<div class="col-md-12 mt-20" style="display: none;" id="multiplefile_upload">
 							<input type="file" id="multiplefileupload"  class="dropify" name="multiplefileupload" webkitdirectory mozdirectory msdirectory odirectory directory multiple>
-								<div class="progress progress-line-info" id="orderentry-progressupload" style="display:none; height: 22px;">
+								<div class="progress progress-line-info" id="bulk_file_orderentry-progressupload" style="display:none; height: 22px;">
 									<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width:0%; height: 21px;">
 										<span class="sr-only">0% Complete</span>
 									</div>
@@ -397,25 +430,6 @@
 
 				</div>
 				<div class="form-group" id="preview-table">
-					<ul class="nav nav-pills nav-pills-rose" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#data-table" role="tablist"><small>
-								Data Preview&nbsp;<i class="fa fa-check-circle"></i></small>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#file-data" role="tablist"><small>
-								File Preview&nbsp;<i class="fa fa-times-circle-o"></i></small>
-							</a>
-						</li>
-					</ul>
-					<div class="tab-content tab-space">
-						<div id="data-table" class="tab-pane active cont">
-
-						</div>
-						<div id="file-table" class="tab-pane active cont">
-						</div>
-					</div>
 
 				</div>
 
@@ -465,6 +479,10 @@
 
 			$('#btn_multiplefile_upload_toggle').off('click').on('click', function (e) {
 				$('#multiplefile_upload').slideToggle('slow');
+			});
+
+			$('#btn_text_multiplefile_upload_toggle').off('click').on('click', function (e) {
+				$('#text_multiplefile_upload').slideToggle('slow');
 			});
 
 			
@@ -655,12 +673,12 @@
             uploaded.userid=USERUID;
             uploaded.datetime=datetime;
 
-            var documentrow='<tr class="AbstractorFileRow">';
+            var documentrow='<tr class="DocumentFileRow">';
             documentrow+='<td>'+file.name+'</td>';
             documentrow+='<td>'+datetime+'</td>';
             documentrow+='<td>'+USERNAME+'</td>';
             documentrow+='<td><div class="togglebutton"><label><input type="checkbox" name="Stacking['+fileid+']" class="chkbox_stacking" value="1" checked="true"><span class="toggle"></span> </label></div></td>';
-            documentrow+='<td style="text-align: left;"><button type="button" data-fileuploadid="'+fileid+'" class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>';
+            documentrow+='<td style="text-align: left;"><button type="button"  data-context = "SingleInsertTable" data-fileuploadid="'+fileid+'" class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>';
             documentrow+='</tr>';
 
             output.push(documentrow);
@@ -680,12 +698,25 @@
 
 			var currentrow = $(this);
 			var fuid = $(currentrow).attr('data-fileuploadid');
+			
+			var context = $(this).attr('data-context');
+			var tablename = '#DocumentPreviewTable';
+			if (context == 'SingleInsertTable') {
+				filetoupload.splice(fuid,1);
+				tablename = '#DocumentPreviewTable';
+			}
+			else if (context == 'ExcelTable') {
+				ExcelFiletoUploadexcelmultiplefileupload_Obj.splice(fuid,1);
+				tablename = '#ExcelDocumentPreviewTable';				
+			}
+			else if (context == 'TextTable') {
+				textmultiplefileupload_Obj.splice(fuid,1);
+				tablename = '#TextDocumentPreviewTable';				
+			}
 
-			filetoupload.splice(fuid,1);
 			$(currentrow).closest('tr').remove();
-			console.log(filetoupload);
 
-			$('tr.AbstractorFileRow').find('.DeleteUploadDocument').each(function(key, element){
+			$(tablename + ' tr.DocumentFileRow').find('.DeleteUploadDocument').each(function(key, element){
 				$(element).attr('data-fileuploadid', key);
 			});
 		});
@@ -711,10 +742,10 @@
 
 				var datetime=calcTime('Caribbean', '-5');
 
-				var documentrow='<tr class="AbstractorFileRow">';
+				var documentrow='<tr class="DocumentFileRow">';
 				documentrow+='<td>'+file.name+'</td>';
 				documentrow+='<td>'+datetime+'</td>';
-				documentrow+='<td style="text-align: left;"><button type="button" data-fileuploadid="'+fileid+'" class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>';
+				documentrow+='<td style="text-align: left;"><button type="button" data-context = "ExcelTable" data-fileuploadid="'+fileid+'" class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>';
 				documentrow+='</tr>';
 
 				output.push(documentrow);
@@ -722,6 +753,39 @@
 			}
 
 			$('#ExcelDocumentPreviewTable').find('tbody').append(output.join(""));
+
+			/*Loader START To BE Added*/
+
+		});
+	
+
+		/* ABSTRACTOR DOCUMENT SCRIPT SECTION STARTS */
+		$(document).on('change', '#text_multiplefile_upload', function(event){
+
+
+			var output = [];
+
+
+			for(var i = 0; i < event.target.files.length; i++)
+			{
+				var fileid=textmultiplefileupload_Obj.length;
+				var file = event.target.files[i];
+				textmultiplefileupload_Obj.push({file: file, filename: file.name , is_stacking: 1});
+				console.log(textmultiplefileupload_Obj);
+
+				var datetime=calcTime('Caribbean', '-5');
+
+				var documentrow='<tr class="DocumentFileRow">';
+				documentrow+='<td>'+file.name+'</td>';
+				documentrow+='<td>'+datetime+'</td>';
+				documentrow+='<td style="text-align: left;"><button type="button"  data-context = "TextTable" data-fileuploadid="'+fileid+'" class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>';
+				documentrow+='</tr>';
+
+				output.push(documentrow);
+
+			}
+
+			$('#TextDocumentPreviewTable').find('tbody').append(output.join(""));
 
 			/*Loader START To BE Added*/
 
@@ -739,13 +803,23 @@
 				var CustomerUID = $('#bulk_Customers').val();
 				var ProjectUID = $('#bulk_ProjectUID').val();
 				
-				
-				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProjectUID=' + ProjectUID;
-				
+				var form_data = new FormData();
+				form_data.append('CustomerUID', $('#bulk_Customers').val());
+				form_data.append('ProjectUID', $('#bulk_ProjectUID').val());
+				form_data.append('bulk_order_details', $('#bulk_order_details').val());
+
+				$.each(textmultiplefileupload_Obj, function (key, value) {
+					form_data.append('FILE_NAMES[]', value.filename);
+				});
+
+
 				$.ajax({
 					type: "POST",
 					url: '<?php echo base_url(); ?>orderentry/text_preview_bulkentry',
-					data: formData,
+					data: form_data,
+					processData: false,
+					contentType: false,
+					cache:false,
 					dataType:'json',
 					beforeSend: function(){
 						$('.spinnerclass').addClass("be-loading-active");
@@ -754,17 +828,35 @@
 					},
 					success: function(data)
 					{
-						$('.spinnerclass').removeClass("be-loading-active");
-						button.html('Preview');
-						
-						button.removeAttr("disabled");
-						
-						if (data.error==1) {
-							$.notify({icon:"icon-bell-check",message:data['message']},{type:"danger",delay:3000 });
-						}
-						else if (data.error==0) {
-							$('#preview-table').html(data.html);
-						}						
+							$('.spinnerclass').removeClass("be-loading-active");
+							$('#preview-table').html('');
+							
+							if (data.error==1) {
+								$.notify({icon:"icon-bell-check",message:data['message']},{type:"danger",delay:3000 });
+							}
+							else if (data.error==0) {
+								$('#imported-table').html('');
+								
+								var addtext = '<ul class="nav nav-pills nav-pills-rose" role="tablist"><li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#success-table" role="tablist"><small> Import Data Preview&nbsp;<i class="fa fa-check-circle"></i></small> </a></li><li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#error-data" role="tablist"><small> Import File Preview &nbsp;<i class="fa fa-times-circle-o"></i></small> </a></li></ul><div class="tab-content tab-space"><div id="success-table" class="tab-pane active cont">';
+
+								addtext += data.html;
+								
+								addtext += '</div><div id="error-data" class="tab-pane cont">';
+
+								addtext += data.filehtml;
+
+								addtext += '</div></div></div></div>'
+
+
+								// addtext='<ul class="nav nav-pills nav-pills-rose" role="tablist"><li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#success-table" role="tablist"><small> Imported&nbsp;<i class="fa fa-check-circle"></i></small> </a></li><li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#error-data" role="tablist"><small> Not Imported&nbsp;<i class="fa fa-times-circle-o"></i></small> </a></li></ul><div class="tab-content tab-space"><div id="success-table" class="tab-pane active cont">text 1</div><div id="error-data" class="tab-pane cont">text 2</div></div></div></div>';
+
+								$('#preview-table').html(addtext);
+							}						
+
+
+							button.html('Preview');
+							button.removeAttr("disabled");
+
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log(errorThrown);
@@ -790,13 +882,26 @@
 				var ProjectUID = $('#bulk_ProjectUID').val();
 				
 				
-				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProjectUID=' + ProjectUID;
 				
+				var form_data = new FormData();
+				form_data.append('CustomerUID', $('#bulk_Customers').val());
+				form_data.append('ProjectUID', $('#bulk_ProjectUID').val());
+				form_data.append('bulk_order_details', $('#bulk_order_details').val());
+
+
+				$.each(textmultiplefileupload_Obj, function (key, value) {
+					form_data.append('MIME_FILES[]', value.file);
+				});
+
+
 				$.ajax({
 					type: "POST",
 					url: '<?php echo base_url(); ?>orderentry/text_save_bulkentry',
-					data: formData,
+					data: form_data,
 					dataType: 'json',
+					processData: false,
+					contentType: false,
+					cache:false,
 					beforeSend: function(){
 						$('.spinnerclass').addClass("be-loading-active");
 						button.attr("disabled", true);
