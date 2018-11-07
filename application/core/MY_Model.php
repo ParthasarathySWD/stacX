@@ -15,6 +15,7 @@ class MY_Model extends CI_Model {
 		$this->loggedid = $this->session->userdata('UserUID');
 		
 		$this->UserName = $this->session->userdata('UserName');
+		$this->RoleUID = $this->session->userdata('RoleUID');
 	}
 
 	// Return Result.

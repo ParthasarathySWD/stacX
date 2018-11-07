@@ -102,6 +102,26 @@ class Common_Model extends MY_Model {
 			return $result;
 		}
 	}
+	function getOrderDetails($OrderUID)
+	{
+		$this->db->select('*');
+		$this->db->from('tOrders');
+		$this->db->join('mCustomer', 'tOrders.CustomerUID = mCustomer.CustomerUID', 'left');
+		$this->db->join('mStatus', 'mStatus.StatusUID = tOrders.StatusUID', 'left');
+		$this->db->join('mProjectCustomer', 'tOrders.ProjectUID = mProjectCustomer.ProjectUID', 'left');
+		$this->db->where('tOrders.OrderUID', $OrderUID);
+		$query = $this->db->get();
+		return $query->row();
+	}
 
+	public function GetOrderExceptions($OrderUID)
+	{
+		$this->db->select('*')->from('tOrderException');
+		$this->db->select("Date_Format(tOrderException.ExceptionRaisedDateTime,'%m-%d-%Y %H:%i:%s') AS ExceptionRaisedDateTime", true);
+		$this->db->select("Date_Format(tOrderException.ExceptionClearedDateTime,'%m-%d-%Y %H:%i:%s') AS ExceptionClearedDateTime", true);
+		$this->db->join('mExceptions', 'mExceptions.ExceptionUID = tOrderException.ExceptionTypeUID', 'left');
+		$this->db->where('tOrderException.OrderUID', $OrderUID);
+		return $this->db->get()->result();
+	}
 
 }?>

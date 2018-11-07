@@ -661,7 +661,7 @@
 
 
       /* ABSTRACTOR DOCUMENT SCRIPT SECTION STARTS */
-      $(document).on('change', '#DocumentUpload', function(event){
+      $(document).off('change', '#DocumentUpload').on('change', '#DocumentUpload', function(event){
 
 
           var output = [];
@@ -700,7 +700,7 @@
    
 
 
-		$("body").on("click" , ".DeleteUploadDocument" , function(e){
+		$("body").on('change', '.DeleteUploadDocument').on("click" , ".DeleteUploadDocument" , function(e){
 			e.preventDefault();
 
 			var currentrow = $(this);
@@ -734,7 +734,7 @@
 
 
 		/* ABSTRACTOR DOCUMENT SCRIPT SECTION STARTS */
-		$(document).on('change', '#multiplefile_upload', function(event){
+		$(document).off('change', '#multiplefile_upload').on('change', '#multiplefile_upload', function(event){
 
 
 			var output = [];
@@ -767,7 +767,7 @@
 	
 
 		/* ABSTRACTOR DOCUMENT SCRIPT SECTION STARTS */
-		$(document).on('change', '#text_multiplefile_upload', function(event){
+		$(document).off('change', '#text_multiplefile_upload').on('change', '#text_multiplefile_upload', function(event){
 
 
 			var output = [];

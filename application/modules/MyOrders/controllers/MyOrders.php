@@ -33,6 +33,7 @@ class MyOrders extends MY_Controller {
         $list = $this->MyOrders_Model->MyOrders($post);
 
         $no = $post['start'];
+		$myorderslist = [];
 
 		foreach ($list as $myorders)
         {

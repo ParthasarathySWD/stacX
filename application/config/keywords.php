@@ -7,27 +7,26 @@
 |
 */
 
-$config['keywords'] = array (
-					'New Order'	=> '0',
-					'Reopened Order'=>'5',
-					'Order Assigned'=>'10',
-					'Flood Api' => '11',
-					'Order Work In Progress'=>'15',
-					'Partial Draft Complete'=>'19',
-					'Draft Complete'=>'20',
-					'Review In Progress'=>'35',
-					'Partial Review Complete'=>'39',
-					'Review Complete'=>'40',
-					'Exception Raised'=>'49',
-					'Exception Clarified'=>'50',
-					'Raised Special Case'=>'59',
-					'Clarified'=>'60',
-					'Order Exported'=>'90',
-					'Order Completed'=>'100',
-					'Cancelled'=>'110',
-					'Billed'=>'115',
-				);
+$config['keywords'] = array(
+	'New Order' => '1',
+	'Waiting For Images' => '9',
+	'Image Received' => '10',
+	'Stacking In Progress' => '15',
+	'Stacking Completed' => '16',
+	'Review In Progress' => '29',
+	'Review Completed' => '30',
+	'Export' => '40',
+	'Fatal Exception' => '45',
+	'Fatal Exception Fix In Progress' => '46',
+	'Non Fatal Exception' => '47',
+	'Non Fatal Exception Fix In Progress' => '48',
+	'Draft In Progress' => '55',
+	'Drafted' => '56',
+	'On Hold' => '60',
+	'Completed' => '100',
+	'Cancelled' => '101',
 
+);
 $config['PartyTypeUID'] = array(
 					'Mortgagor'=> '1',
 					'Mortgagee'=> '2',

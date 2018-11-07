@@ -1,22 +1,24 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
-class Ordersummary extends MY_Controller {
+class Stacking extends MY_Controller {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Ordersummarymodel');
+		$this->load->model('Stacking_Model');
 		$this->lang->load('keywords');
 		ini_set('display_errors', 1);
 
 	}	
 
-	public function index()
+	public function index($OrderUID)
 	{
-		$OrderUID = $this->uri->segment(3);
+		
 		$data['content'] = 'index';
+
 		$data['Customers'] = $this->Common_Model->get('mCustomer', [], ['CustomerUID'=>'ASC'], []);
-		$data['OrderSummary'] = $this->Ordersummarymodel->GettOrders($OrderUID);
-		$data['Documents'] = $this->Ordersummarymodel->GetDocuments($OrderUID);
+		$data['OrderDetails'] = $this->Common_Model->getOrderDetails($OrderUID);
+		$data['ExceptionList'] = $this->Common_Model->GetOrderExceptions($OrderUID);
+
 		$this->load->view($this->input->is_ajax_request() ? $data['content'] : 'page', $data);
 	}
 

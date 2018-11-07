@@ -123,6 +123,12 @@ $lang['Customer_Update'] = "Customer Updated Successfully";
 
 
 
+$lang['Stacking_Complete'] = "Stacking Completed";
+$lang['Review_Complete'] = "Review Completed";
+$lang['Exception_Raised'] = "Exception Raised";
+$lang['Exception_Raise_Failed'] = "Exception Raise Failed";
+
+$lang['Complete_Failed'] = 'Failed to Complete';
 
 
 

@@ -1,27 +1,8 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
-class Ordersummarymodel extends MY_Model { 
+class Stacking_Model extends MY_Model { 
 	function __construct()
 	{ 
 		parent::__construct();
-	}
-
-	function GettOrders($OrderUID)
-	{
-		$this->db->select('*');
-		$this->db->from('tOrders');
-		$this->db->where(array('tOrders.OrderUID'=>$OrderUID));
-		$query = $this->db->get();
-		return $query->row();
-	}
-
-	function GetDocuments($OrderUID)
-	{
-	    $this->db->select('*');
-		$this->db->from('tDocuments');
-		$this->db->join('mUsers','mUsers.UserUID = tDocuments.UploadedByUserUID','left');
-		$this->db->where(array('tDocuments.OrderUID'=>$OrderUID));
-		$query = $this->db->get();
-		return $query->result();
 	}
 
 
@@ -37,7 +18,7 @@ class Ordersummarymodel extends MY_Model {
 		$insertdata->AltORderNumber = $data['AltORderNumber'];
 		$insertdata->LoanNumber = $data['LoanNumber'];
 		// $insertdata->LoanAmount = $data['LoanAmount'];
-		$insertdata->CustomerRefNumber = $data['CustomerRefNum'];
+		// $insertdata->CustomerRefNum = $data['CustomerRefNum'];
 		$insertdata->CustomerUID = $data['Customer'];
 		$insertdata->PropertyAddress1 = $data['PropertyAddress1'];
 		$insertdata->PropertyAddress2 = $data['PropertyAddress2'];
@@ -53,28 +34,66 @@ class Ordersummarymodel extends MY_Model {
 		// $insertdata->APN = $data['APN'];
 		// $insertdata->IsDuplicateOrder = $IsDuplicateOrder;
 
-		//$insertdata->OrderNumber = $this->Order_Number();
+		$insertdata->OrderNumber = $this->Order_Number();
 
 		$OrderNos = [];
 		$insertdata->OrderDueDate = date('Y-m-d H:i:s');
 		// $insertdata->OrderDocsPath = 'uploads/Documents/' . $date . '/' . $OrderNo . '/';
-		$this->db->where(array("tOrders.OrderUID"=>$data['OrderUID']));    
-		$query = $this->db->update('tOrders', $insertdata);
-		$insert_id = $data['OrderUID'];
+		$query = $this->db->insert('tOrders', $insertdata);
+		$insert_id = $this->db->insert_id();
 
 
 		if ($this->db->trans_status() === false) {
 			$this->db->trans_rollback();
 		} else {
 			$this->db->trans_commit();
-			$OrderNos[] = $this->db->select('OrderNumber')->from('tOrders')->where('tOrders.OrderUID',$data['OrderUID'])->get()->row()->OrderNumber;
+			$OrderNos[] = $insertdata->OrderNumber;
 		}
 
 		$OrderNumbers = implode(",", $OrderNos);
-		$Msg = $this->lang->line('Order_Update');
+		$Msg = $this->lang->line('Order_Save');
 		$Rep_msg = str_replace("<<Order Number>>", $OrderNumbers, $Msg);
-		return ['message'=>$Rep_msg, 'OrderUID'=>$insert_id, 'OrderNumber'=>$OrderNumbers];
+		return ['message'=>$Rep_msg, 'OrderUID'=>$insert_id, 'OrderNumber'=>$insertdata->OrderNumber];
 
 	}
+
+
+	function Order_Number()
+	{
+
+		$date = date("y") % 20;
+
+		$id = sprintf("%06d", 0);
+		$code="S";
+		$lastOrderNo = $code . $date . $id;
+
+		$last_row = $this->db->select('*')->order_by('OrderUID', "DESC")->limit(1)->get('tOrders')->row();
+		if (!empty($last_row)) {
+
+			$lastOrderNo = $last_row->OrderNumber;
+
+		}
+
+
+		$year = substr($date, strpos($lastOrderNo, $date));
+
+		$db_2digitdate = substr($lastOrderNo, strlen($code), strlen($date));
+
+
+		if ($year == $db_2digitdate) {
+
+			$lastOrderNosliced = substr($lastOrderNo, (strlen($code) + strlen($date)));
+			$id = sprintf("%06d", $lastOrderNosliced + 1);
+			$OrderNumber = $code . $date . $id;
+		} else {
+			$id = sprintf("%06d", 1);
+			$OrderNumber = $code . $date . $id;
+
+		}
+
+		return $OrderNumber;
+
+	}
+
 }
 ?>

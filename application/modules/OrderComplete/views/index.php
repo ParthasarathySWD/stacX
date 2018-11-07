@@ -51,27 +51,16 @@
          <div class="tab-content tab-space">
             <div class="tab-pane active" id="summary">
                <form action="#"  name="orderform" id="order_frm">
-                <input type="hidden" name="OrderUID" id="OrderUID" value="<?php echo $OrderSummary->OrderUID;?>">
                   <div class="col-md-12 pd-0">
                   </div>
                   <div class="row">
-                    <!-- <?php echo'<pre>';print_r($OrderSummary);?> -->
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="Customer" class="bmd-label-floating">Customer<span class="mandatory"></span></label>
                            <select class="select2picker form-control"  id="Customer" name="Customer" required>
                               <option value=""></option>
-                              <?php 
-
-                              foreach ($Customers as $key => $value) { 
-                                if($value->CustomerUID == $OrderSummary->CustomerUID)
-                                { ?>
-                                  <option value="<?php echo $value->CustomerUID; ?>" selected><?php echo $value->CustomerName; ?></option>
-                               <?php  }else{ ?>
-
-                                  <option value="<?php echo $value->CustomerUID; ?>"><?php echo $value->CustomerName; ?></option>
-                                <?php } ?>
-
+                              <?php foreach ($Customers as $key => $value) { ?>
+                              <option value="<?php echo $value->CustomerUID; ?>"><?php echo $value->CustomerName; ?></option>
                               <?php } ?>								
                            </select>
                         </div>
@@ -79,7 +68,7 @@
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="CustomerRefNum" class="bmd-label-floating">Customer Ref Number</label>
-                           <input type="text" class="form-control" id="CustomerRefNum" name="CustomerRefNum" value="<?php echo $OrderSummary->CustomerRefNumber; ?>" />
+                           <input type="text" class="form-control" id="CustomerRefNum" name="CustomerRefNum" />
                         </div>
                      </div>
                      <div class="col-md-3 productrow">
@@ -109,25 +98,25 @@
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="AltORderNumber" class="bmd-label-floating">Alternate Order Number</label>
-                           <input type="text" class="form-control" id="AltORderNumber" name="AltORderNumber" value="<?php echo $OrderSummary->AltOrderNumber; ?>">
+                           <input type="text" class="form-control" id="AltORderNumber" name="AltORderNumber">
                         </div>
                      </div>
                      <div class="col-md-3" id="divLoanNumber">
                         <div class="form-group bmd-form-group">
                            <label for="LoanNumber" class="bmd-label-floating">Loan Number</label>
-                           <input type="text" class="form-control" id="LoanNumber" name="LoanNumber" value="<?php echo $OrderSummary->LoanNumber; ?>">
+                           <input type="text" class="form-control" id="LoanNumber" name="LoanNumber">
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="PropertyAddress1" class="bmd-label-floating">Address Line 1<span class="mandatory"></span></label>
-                           <input type="text" class="form-control" id="PropertyAddress1" name="PropertyAddress1" required value="<?php echo $OrderSummary->PropertyAddress1; ?>">
+                           <input type="text" class="form-control" id="PropertyAddress1" name="PropertyAddress1" required>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="PropertyAddress2" class="bmd-label-floating">Address Line 2</label>
-                           <input type="text" class="form-control" id="PropertyAddress2" name="PropertyAddress2" value="<?php echo $OrderSummary->PropertyAddress2; ?>">
+                           <input type="text" class="form-control" id="PropertyAddress2" name="PropertyAddress2">
                         </div>
                      </div>
                   </div>
@@ -143,7 +132,7 @@
                      <div class="col-md-3">
                         <div class="form-group bmd-form-group">
                            <label for="PropertyZipcode" class="bmd-label-floating">Zipcode<span class="mandatory"></span></label>
-                           <input type="text" class="form-control" id="PropertyZipcode" name="PropertyZipcode" required value="<?php echo $OrderSummary->PropertyZipCode; ?>">
+                           <input type="text" class="form-control" id="PropertyZipcode" name="PropertyZipcode" required>
                            <span data-modal="zipcode-form" class="label label-success label-zip md-trigger" id="zipcodeadd" style="display: none;">Add Zipcode</span>
                         </div>
                      </div>
@@ -173,11 +162,9 @@
                   </div>
                   <div class="row">
                      <div class="col-md-12 text-left">									
-                        <button type="button" class="btn btn-dribbble btn-sm btn-github" id="btnpricingimport"><i class="icon-upload4 pr-10"></i>Upload File(s)</button> 
-                        <input type="hidden" name="documentlength" id="documentlength" value="<?php echo sizeof($Documents); ?>">
+                        <button type="button" class="btn btn-dribbble btn-sm btn-github" id="btnpricingimport"><i class="icon-upload4 pr-10"></i>Upload File(s)</button>
                      </div>
-
-                     <div class="col-md-12 mt-20" style="" id="pricingimport">
+                     <div class="col-md-12 mt-20" style="display: none;" id="pricingimport">
                         <input type="file" id="DocumentUpload" class="dropify" accept=".pdf">
                         <div class="col-md-12 text-right">
                            <!-- <button type="submit" class="btn btn-success btn-sm" id="btnUploadExcelFile"><i class="icon-upload4"></i> Upload<div class="ripple-container"></div></button> -->
@@ -208,36 +195,6 @@
                                  </th>
                               </thead>
                               <tbody>
-
-                                <?php
-                                foreach ($Documents as $key => $value) { ?>
-
-                                <tr>
-                                 <td>
-                                    <?php echo $value->DocumentName;?> 
-                                 </td>
-                                 <td>
-                                    <?php echo $value->UploadedDateTime;?> 
-                                 </td>
-                                 <td>
-                                    <?php echo $value->UserName;?>  
-                                 </td>
-                                 <td>
-                                    <div class="togglebutton">
-                                        <label>
-                                        <?php if($value->IsStacking==1): ?>
-                                        <input type="checkbox" name="Active" id="<?php echo $value->DocumentUID;?>" class="Status" value="1" checked="true">
-                                        <?php elseif($value->IsStacking==0): ?>
-                                        <input type="checkbox" name="Active" id="<?php echo $value->DocumentUID;?>" class="Status" value="0">
-                                        <?php endif; ?>
-                                        <span class="toggle"></span>
-                                      </label>
-                                    </div> 
-                                 </td>
-                                  <td style="text-align: left;"><button type="button"  class="DeleteUploadDocument btn btn-link btn-danger btn-just-icon btn-xs"><i class="icon-x"></i></button></td>
-                                </tr>
-                                <?php } ?>
-
                               </tbody>
                            </table>
                         </div>
@@ -254,9 +211,6 @@
                      </div>
                   </div>
                   <div class="col-sm-12 form-group pull-right">
-                    <p class="text-right">
-                      <button type="submit" class="btn btn-space btn-social btn-color btn-twitter single_submit" value="1">Update</button>
-                    </p>
                   </div>
                </form>
             </div>
@@ -271,18 +225,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-
-    var documentlength = $('#documentlength').val();
-   
-    if(documentlength > 0)
-    {
-      $('#pricingimport').show();
-    }else{
-      $('#pricingimport').hide();
-    }
-
-    $('#Customer').trigger('change');
-    $('#PropertyZipcode').trigger('blur');
 
 			filetoupload=[];
 			$('#filebulk_entry').dropify();	
@@ -358,7 +300,6 @@
 				button = $(".single_submit[clicked=true]");
 				button_val = $(".single_submit[clicked=true]").val();
 				button_text = $(".single_submit[clicked=true]").html();
-        var OrderUID = $('#OrderUID').val();
 				
 				console.log(button);
 				// var LoanAmount = $('#LoanAmount').val();
@@ -379,7 +320,7 @@
 
 				$.ajax({
 					type: "POST",
-					url: '<?php echo base_url(); ?>Ordersummary/insert',
+					url: '<?php echo base_url(); ?>OrderEntry/insert',
 					data: formData, 
 					dataType:'json',
 					cache: false,
@@ -415,8 +356,24 @@
 
 							if(button_val == 1)
 							{
-								triggerpage(base_url+'Ordersummary/index/'+OrderUID);
+								triggerpage(base_url+'OrderEntry');
 							}
+
+							if(button_val == 2)
+							{
+								triggerpage(base_url+'OrderAssignment');
+								$('#leftsidebarmenu li').removeClass('active')
+								$('a[href*="'+base_url+'OrderAssignment"]').parent().addClass('active');
+
+							}
+
+							if(button_val == 3)
+							{
+								triggerpage(base_url+'Dashboard');
+								$('#leftsidebarmenu li').removeClass('active')
+								$('a[href*="'+base_url+'Dashboard"]').parent().addClass('active');
+							}
+
 
 						}else if(data['validation_error'] == 1){
 
@@ -460,7 +417,7 @@
 
 
       /* ABSTRACTOR DOCUMENT SCRIPT SECTION STARTS */
-      $(document).off('change', '#DocumentUpload').on('change', '#DocumentUpload', function(event){
+      $(document).on('change', '#DocumentUpload', function(event){
 
 
           var output = [];
@@ -514,6 +471,271 @@
 			});
 		});
 
+
+		/* ---- BULK ORDER ENTRY STARTS ----*/
+
+		//preview bulk entry
+		$('#preview').click(function(event) {
+			event.preventDefault();
+			button = $(this);
+			button_val = $(this).val();
+			button_text = $(this).html();
+			
+			var file_data = $('#filebulk_entry').prop('files')[0];
+			var form_data = new FormData();
+			form_data.append('file', file_data);
+			form_data.append('CustomerUID', $('#bulk_Customers').val());
+			form_data.append('ProductUID', $('#bulk_products').val());
+			form_data.append('SubProductUID', $('#bulk_subproducts').val());
+			
+			
+			
+			$.ajax({
+				type: "POST",
+				url: '<?php echo base_url(); ?>orderentry/preview_bulkentry',
+				data: form_data,
+				processData: false,
+				contentType: false,
+				cache:false,
+				
+				beforeSend: function(){
+					$('.spinnerclass').addClass("be-loading-active");  
+					button.attr("disabled", true);
+					button.html('Loading ...'); 
+				},
+				success: function(data)
+				{ 
+					$('.spinnerclass').removeClass("be-loading-active");
+					$('#preview-table').html('');
+					try {
+						obj = JSON.parse(data);
+						$.gritter.add({
+							title: obj['message'],
+							class_name: 'color danger',
+							fade: true,
+							time: 1000,
+							speed:'fast',
+							
+						});
+					} catch (e) {
+						$('#imported-table').html('');
+						$('#preview-table').html(data);
+					}
+					
+					button.html('Preview');
+					button.removeAttr("disabled");
+					
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(errorThrown);
+					
+				},
+				failure: function (jqXHR, textStatus, errorThrown) {
+					
+					console.log(errorThrown);
+					
+				},
+			});
+		});
+
+
+
+		//save bulk entry
+		$('#bulk_save').click(function(event) {
+			event.preventDefault();
+			button = $(this);
+			button_val = $(this).val();
+			button_text = $(this).html();
+			var file_data = $('#filebulk_entry').prop('files')[0];
+			var form_data = new FormData();
+			form_data.append('file', file_data);
+			form_data.append('CustomerUID', $('#bulk_Customers').val());
+			form_data.append('ProductUID', $('#bulk_products').val());
+			form_data.append('SubProductUID', $('#bulk_subproducts').val());
+			form_data.append('ProjectUID', $('#bulk_projects').val());
+			
+			$.ajax({
+				type: "POST",
+				url: '<?php echo base_url(); ?>orderentry/save_bulkentry',
+				data: form_data,
+				processData: false,
+				contentType: false,
+				cache:false,
+				beforeSend: function(){
+					$('.spinnerclass').addClass("be-loading-active");
+					button.attr("disabled", true);
+					button.html('Loading ...'); 
+				},
+				success: function(data)
+				{
+					button.html('save'); 
+					button.removeAttr('disabled');
+					$('.spinnerclass').removeClass("be-loading-active");
+					try {
+						obj = JSON.parse(data);
+						$.gritter.add({
+							title: obj['message'],
+							// text: data['message'],
+							class_name: 'color danger',
+							fade: true,
+							time: 1000,
+							speed:'fast',
+							
+						});
+					} catch (e) {
+						$('#preview-table').html('');
+						$('#imported-table').html(data);
+						// 	$('#modal-data').html(data); 
+						// 	$('#md-modal').modal('show');
+						// 	$("#md-modal").on("hidden.bs.modal", function () {
+							// 	window.location.replace("<?php echo base_url(); ?>orderentry");
+							// });
+						}
+						$('.dropify-clear').click();
+						
+						
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(errorThrown);
+						
+					},
+					failure: function (jqXHR, textStatus, errorThrown) {
+						
+						console.log(errorThrown);
+						
+					},
+				});
+			});
+			
+			
+			//preview bulk entry
+			$('#text_preview').click(function(event) {
+				event.preventDefault();
+				button = $(this);
+				button_val = $(this).val();
+				button_text = $(this).html();
+				
+				var CustomerUID = $('#bulk_Customers').val();
+				var ProductUID = $('#bulk_products').val();
+				var SubProductUID = $('#bulk_subproducts').val();
+				
+				
+				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProductUID=' + ProductUID+ '&SubProductUID=' + SubProductUID;
+				
+				$.ajax({
+					type: "POST",
+					url: '<?php echo base_url(); ?>orderentry/text_preview_bulkentry',
+					data: formData,
+					// dataType:'json',
+					beforeSend: function(){
+						$('.spinnerclass').addClass("be-loading-active");
+						button.attr("disabled", true);
+						button.html('Loading ...'); 
+					},
+					success: function(data)
+					{
+						$('.spinnerclass').removeClass("be-loading-active");
+						button.html('Preview');
+						
+						button.removeAttr("disabled");
+						
+						try {
+							obj = JSON.parse(data);
+							$.gritter.add({
+								title: obj['message'],
+								class_name: 'color danger',
+								fade: true,
+								time: 1000,
+								speed:'fast',
+								
+							});
+						} catch (e) {
+							$('#preview-table').html(data);
+							
+							
+						}
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(errorThrown);
+						
+					},
+					failure: function (jqXHR, textStatus, errorThrown) {
+						
+						console.log(errorThrown);
+						
+					},
+				});
+			});
+			
+			
+			//save bulk entry
+			$('#text_bulk_save').click(function(event) {
+				event.preventDefault();
+				button = $(this);
+				button_val = $(this).val();
+				button_text = $(this).html();
+				var CustomerUID = $('#bulk_Customers').val();
+				var ProductUID = $('#bulk_products').val();
+				var SubProductUID = $('#bulk_subproducts').val();
+				var ProjectUID = $('#bulk_projects').val();
+				
+				var formData = $('#bulkentry-form').serialize()+ '&CustomerUID=' + CustomerUID+ '&ProductUID=' + ProductUID+ '&SubProductUID=' + SubProductUID+ '&ProjectUID=' + ProjectUID;
+				$.ajax({
+					type: "POST",
+					url: '<?php echo base_url(); ?>orderentry/text_save_bulkentry',
+					data: formData,
+					beforeSend: function(){
+						$('.spinnerclass').addClass("be-loading-active");
+						button.attr("disabled", true);
+						button.html('Loading ...'); 
+					},
+					success: function(data)
+					{
+						button.html('save'); 
+						button.removeAttr('disabled');
+						$('.spinnerclass').removeClass("be-loading-active");
+						
+						try {
+							obj = JSON.parse(data);
+							$.gritter.add({
+								title: obj['message'],
+								// text: data['message'],
+								class_name: 'color danger',
+								fade: true,
+								time: 1000,
+								speed:'fast',
+								
+							});
+						} catch (e) {
+							$('#preview-table').html('');
+							$('#imported-table').html(data);
+							// $('#modal-data').html(data); 
+							// $('#md-modal').modal('show');
+							// $("#md-modal").on("hidden.bs.modal", function () {
+								// 	window.location.replace("<?php echo base_url(); ?>orderentry");
+								// });
+							}
+							
+							
+							
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							console.log(errorThrown);
+							
+						},
+						failure: function (jqXHR, textStatus, errorThrown) {
+							
+							console.log(errorThrown);
+							
+						},
+					});
+				});
+				
+
+
+		/* ---- BULK ORDER ENTRY ENDS ----*/
 
 	});
 	</script>

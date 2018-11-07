@@ -56,18 +56,36 @@
         </div>
       </div>
       <ul class="nav"> 
-        <li class="nav-item active">
+          <li class="nav-item active">
           <a class="nav-link ajaxload" href="<?php echo base_url(); ?>">
-            <i class="icon-home5"></i>
-            <p> Dashboard </p>
+          <i class="icon-city"></i>
+          <p> Dashboard </p>
           </a>
-        </li>
-        <li class="nav-item">
+          </li>
+          <li class="nav-item">
+          <a class="nav-link ajaxload" data-session="<?php echo $this->session->userdata('UserUID'); ?>" href="<?php echo base_url(); ?>Orderentry"> 
+          <i class="icon-file-text"></i> 
+          <p> Order Entry </p>
+          </a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link ajaxload" href="<?php echo base_url(); ?>Orderassignment">
+          <i class="icon-pencil5"></i>
+          <p>Order Assignment</p>
+          </a>
+          </li>
+          <li class="nav-item">
           <a class="nav-link ajaxload" href="<?php echo base_url(); ?>MyOrders">
-            <i class="icon-folder-check"></i>
-            <p>My Orders</p>
+          <i class="icon-pencil5"></i>
+          <p>My Orders</p>
           </a>
-        </li>  
+          </li>
+          <li class="nav-item">
+          <a class="nav-link ajaxload" href="<?php echo base_url(); ?>Exceptionorders">
+          <i class="icon-reload-alt"></i>
+          <p>Exception Orders</p>
+          </a>
+          </li>
        </ul>                
   </div>
   </div>

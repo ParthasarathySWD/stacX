@@ -176,6 +176,214 @@ $(function () {
         }
     });
 
+    $(document).off('click','#stackingcomplete').on('click','#stackingcomplete', (e)=>{
+        /*SWEET ALERT CONFIRMATION*/
+        swal({
+            title: '<div class="text-primary" id="iconchg"><i style="font-size: 40px;" class="fa fa-info-circle fa-5x"></i></div>',
+            html: '<span id="modal_msg" class= "modal_spanheading" > Do you want to complete the Stacking ?</span>',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            closeOnClickOutside: false,
+            allowOutsideClick: false,
+            showLoaderOnConfirm: true,
+            position: 'top-end'
+        }).then(function (confirm) {
+
+            var OrderUID = $('#OrderUID').val();
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'OrderComplete/StackingComplete',
+                data: { 'OrderUID': OrderUID },
+                dataType: 'json',
+                cache: false,
+                beforeSend: function () {
+                    addcardspinner('#Orderentrycard');
+                },
+                success: function (data) {
+                    if (data.validation_error==0) {
+                        /*Sweet Alert MSG*/
+                        swal({
+                            title: "<i class='icon-checkmark2 iconsuccess'></i>",
+                            html: "<p>"+data.message+"</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+                    }
+                    else{
+                        swal({
+                            title: "<i class='icon-close2 icondanger'></i>",
+                            html: "<p>" + data.message + "</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+
+                    }
+
+                },
+                error: function(jqXHR){
+                    swal({
+                        title: "<i class='icon-close2 icondanger'></i>",
+                        html: "<p>Failed to Complete</p>",
+                        confirmButtonClass: "btn btn-success",
+                        allowOutsideClick: false,
+                        width: '300px',
+                        buttonsStyling: false
+                    }).catch(swal.noop)
+
+
+                }
+            });
+
+            },
+            function (dismiss) {
+
+            });
+
+
+    });
+    
+    $(document).off('click','#reviewcomplete').on('click','#reviewcomplete', (e)=>{
+        /*SWEET ALERT CONFIRMATION*/
+        swal({
+            title: '<div class="text-primary" id="iconchg"><i style="font-size: 40px;" class="fa fa-info-circle fa-5x"></i></div>',
+            html: '<span id="modal_msg" class= "modal_spanheading" > Do you want to complete Review ?</span>',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            closeOnClickOutside: false,
+            allowOutsideClick: false,
+            showLoaderOnConfirm: true,
+            position: 'bottom-middle'
+        }).then(function (confirm) {
+
+            var OrderUID = $('#OrderUID').val();
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'OrderComplete/ReviewComplete',
+                data: { 'OrderUID': OrderUID },
+                dataType: 'json',
+                cache: false,
+                beforeSend: function () {
+                    addcardspinner('#Orderentrycard');
+                },
+                success: function (data) {
+                    if (data.validation_error==0) {
+                        /*Sweet Alert MSG*/
+                        swal({
+                            title: "<i class='icon-checkmark2 iconsuccess'></i>",
+                            html: "<p>"+data.message+"</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+                    }
+                    else{
+                        swal({
+                            title: "<i class='icon-close2 icondanger'></i>",
+                            html: "<p>" + data.message + "</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+
+                    }
+
+                },
+                error: function(jqXHR){
+                    swal({
+                        title: "<i class='icon-close2 icondanger'></i>",
+                        html: "<p>Failed to Complete</p>",
+                        confirmButtonClass: "btn btn-success",
+                        allowOutsideClick: false,
+                        width: '300px',
+                        buttonsStyling: false
+                    }).catch(swal.noop)
+
+
+                }
+            });
+
+            },
+            function (dismiss) {
+
+            });
+
+
+    })
+    
+    $(document).off('submit','#raiseexcetion').on('submit','#raiseexcetion', function(e){
+
+            e.preventDefault();
+            e.stopPropagation();
+            var OrderUID = $('#OrderUID').val();
+
+            var button = $('#btnraiseexcetion');
+            var button_text = $('#btnraiseexcetion').html();
+
+            var formdata = new FormData($(this)[0]);
+            formdata.append('OrderUID', OrderUID);
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'OrderComplete/RaiseException',
+                data: formdata,
+                dataType: 'json',
+                cache: false,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    button.attr("disabled", true);
+                    button.html('<i class=""fa fa-spin fa-spinner"></i> Loading ...'); 
+
+                },
+                success: function (data) {
+                    if (data.validation_error==0) {
+                        /*Sweet Alert MSG*/
+                        swal({
+                            title: "<i class='icon-checkmark2 iconsuccess'></i>",
+                            html: "<p>"+data.message+"</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+                    }
+                    else{
+                        $.notify({ icon: "icon-bell-check", message: data['message'] }, { type: "danger", delay: 1000 });
+
+                    }
+                    // button.html(button_text);
+                    button.attr("disabled", false);
+
+                },
+                error: function(jqXHR){
+                    swal({
+                        title: "<i class='icon-close2 icondanger'></i>",
+                        html: "<p>Failed to Complete</p>",
+                        confirmButtonClass: "btn btn-success",
+                        allowOutsideClick: false,
+                        width: '300px',
+                        buttonsStyling: false
+                    }).catch(swal.noop)
+
+
+                }
+            });
+
+
+
+    })
     
     
 });//Document Ends
