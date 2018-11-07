@@ -346,6 +346,9 @@
 										<span class="sr-only">0% Complete</span>
 									</div>
 								</div>
+								<div class="col-md-12 pd-0">
+									<h4 class="sectionhead"><i class="icon-checkmark4 headericon"></i>File Preview</h4>	
+								</div>
 
 								<div class="table-responsive">
 									<table class="table table-bordered" id="TextDocumentPreviewTable">
@@ -405,6 +408,10 @@
 										<span class="sr-only">0% Complete</span>
 									</div>
 								</div>
+
+							<div class="col-md-12 pd-0">
+								<h4 class="sectionhead"><i class="icon-checkmark4 headericon"></i>File Preview</h4>	
+							</div>
 
 								<div class="table-responsive">
 									<table class="table table-bordered" id="ExcelDocumentPreviewTable">
@@ -706,7 +713,7 @@
 				tablename = '#DocumentPreviewTable';
 			}
 			else if (context == 'ExcelTable') {
-				ExcelFiletoUploadexcelmultiplefileupload_Obj.splice(fuid,1);
+				excelmultiplefileupload_Obj.splice(fuid,1);
 				tablename = '#ExcelDocumentPreviewTable';				
 			}
 			else if (context == 'TextTable') {

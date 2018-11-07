@@ -5,13 +5,13 @@
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Login | StacX</title>
+  <title>Forgot Password | StacX</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <link href="<?php echo base_url(); ?>assets/css/material-dashboard.min.css" rel="stylesheet" />
   <link href="<?php echo base_url(); ?>assets/demo/demo.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/icon/css/ionicons.css" />
   <link href="<?php echo base_url(); ?>assets/css/icomoon.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
   .off-canvas-sidebar .navbar .navbar-collapse .navbar-nav .nav-item .nav-link{
         font-weight: 400 !important;
@@ -57,7 +57,7 @@ margin-top:20px;
   .alert.alert-with-icon i[data-notify=icon]{
 top :20px !important;
 }
-.Signin{
+.ForgetPassword{
   background: #f44336 !important;
 }
 
@@ -81,60 +81,28 @@ top :20px !important;
       <div class="collapse navbar-collapse justify-content-end">
       </div>
     </div>
-  </nav>
+  </nav>      
   <!-- End Navbar -->
 <div class="wrapper wrapper-full-page">
-   <div class="page-header login-page header-filter" filter-color="black" style="background-image: url('assets/img/bookstore-bg.jpg'); background-size: cover; background-position: top center;">
+   <div class="page-header login-page header-filter" filter-color="black" style="background-image: url('<?php echo base_url(); ?>assets/img/bookstore-bg.jpg'); background-size: cover; background-position: top center;">
       <div class="container">
          <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
-            <form class="form" id="Signin">
+            <form class="form" id="ForgetPassword">
                <div class="card card-login card-hidden">
                   <div class="card-header card-header-default text-center">
-                     <h4 class="card-title">Log in</h4>
+                     <h4 class="card-title">Forgot Password</h4>
                      <div class="social-line">
                      </div>
                   </div>
                   <div class="card-body ">
-                     <div class="form-group has-default">
-                        <div class="input-group">
-                           <div class="input-group-prepend">
-                              <span class="input-group-text">
-                              <i class="icon-user font14"></i>
-                              </span>
-                           </div>
-                           <input type="text" class="form-control"  id="Username" name="Username" placeholder="Login ID *">
-                        </div>
-                     </div>
-                     <div class="form-group has-default">
-                        <div class="input-group">
-                           <div class="input-group-prepend">
-                              <span class="input-group-text">
-                              <i class="icon-lock5 font14"></i>
-                              </span>
-                           </div>
-                           <input type="password" placeholder="Password *" class="form-control" id="Password" name="Password">
-                        </div>
-                     </div>
+                    <div class="form-group">
+                      <label for="loginid" class="bmd-label-floating">Login ID/Email</label>
+                      <input type="text" class="form-control" id="loginid" name="loginid" />
+                    </div>
                   </div>
                   <div class="card-footer justify-content-center">
-                     <div class="text-center" style="display: block">
-                        <button type="submit" class="btn btn-tumblr btn-round mt-10 Signin" >Sign in</button>
-                     </div>
-                     <div class="form-group">
-                        <div class="text-right">
-                           <a href="<?php echo base_url('Login/forgotpassword');?>" class="btn  btn-link btn-tumblr" style="padding: 5px 12px !important;color: #000;">Forgot Password ?</a>
-                        </div>
-                     </div>
-                     <div class="row bordertop">
-                        <div class="col-md-4 text-center pd-20">
-                           <i class="icon-chrome pr-10"></i> <br> 67+
-                        </div>
-                        <div class="col-md-4 borderleft borderright  text-center pd-20">
-                           <i class="icon-firefox pr-10"></i> <br> 61+
-                        </div>
-                        <div class="col-md-4  text-center pd-20">
-                           <i class="icon-IE pr-10"></i> <br>  11+
-                        </div>
+                     <div class="text-center" style="display: block;margin-bottom:20px">
+                        <button type="submit" class="btn btn-tumblr btn-round mt-10 ForgetPassword" >Next</button>
                      </div>
                   </div>
                </div>
@@ -145,27 +113,26 @@ top :20px !important;
 </div>
 <!--   Core JS Files   -->
 
-<script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
-<script src="assets/js/plugins/moment.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/moment.min.js"></script>
 <!--  Plugin for Sweet Alert -->
-<script src="assets/js/plugins/sweetalert2.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/sweetalert2.js"></script>
 <!--  Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<script src="assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/bootstrap-tagsinput.js"></script>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="assets/js/plugins/jasny-bootstrap.min.js"></script>
-<script src="assets/js/plugins/arrive.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/jasny-bootstrap.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/arrive.min.js"></script>
 <!--  Notifications Plugin    -->
-<script src="assets/js/plugins/bootstrap-notify.js"></script>
+<script src="<?php echo base_url();?>assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="assets/js/material-dashboard.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/js/material-dashboard.min.js" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="assets/demo/demo.js"></script>
+<script src="<?php echo base_url();?>assets/demo/demo.js"></script>
 <script>
-  
   $(document).ready(function() {
     $().ready(function() {
       $sidebar = $('.sidebar');
@@ -205,14 +172,12 @@ top :20px !important;
         });
 
       $('.fixed-plugin .active-color span').click(function() {
-
         $full_page_background = $('.full-page-background');
 
         $(this).siblings().removeClass('active');
         $(this).addClass('active');
 
         var new_color = $(this).data('color');
-
 
         if ($sidebar.length != 0) {
           $sidebar.attr('data-color', new_color);
@@ -232,7 +197,6 @@ top :20px !important;
         $(this).addClass('active');
 
         var new_color = $(this).data('background-color');
-
 
         if ($sidebar.length != 0) {
           $sidebar.attr('data-background-color', new_color);
@@ -354,36 +318,30 @@ top :20px !important;
         $('.card').removeClass('card-hidden');
       }, 700);
 
-    $('.Signin').on('click',function(e){
+        $('.ForgetPassword').on('click',function(e){
 
-        e.preventDefault();
-        var data = $('#Signin').serialize();
+
+         e.preventDefault();
+
+        var data = $('#ForgetPassword').serialize();
 
         $.ajax({
-          url:'<?php echo base_url();?>Login/LoginSubmit',
+          url:'<?php echo base_url();?>Login/CheckLoginExist',
           cache:false,
           type:'POST',
           data:data,
           dataType:'json',
+           beforeSend:function()
+           {
+            $('.ForgetPassword').attr('disabled',true); 
+            $('button.ForgetPassword').html("PLEASE WAIT");
+           },
           success:function(data)
           {
-            
-            if(data.validation_error == 1)
+            console.log(data);
+            if(data.validation_error == 2 || data.validation_error == 0)
             {
-
-              if(data.Redirect == 'Dashboard')
-              {
-                $('.Signin').attr('disabled',true); 
-                 window.location.replace("<?php echo base_url('Dashboard');?>");
-              }else if(data.Redirect == 'ChangePassword')
-              {
-                window.location.replace("<?php echo base_url('Login/firstloginchangepasswordpage');?>");
-              }
-
-           }
-           else
-           {
-            $.notify(
+              $.notify(
               {
                 icon:"icon-bell-check",
                 message:data.message
@@ -392,9 +350,30 @@ top :20px !important;
                 type:"danger",
                 delay:1000 
               });
-              $('.Signin').attr('disabled',false); 
-              $('#Password').val('');
-           }
+                  $.each(data, function(k, v) 
+                  {
+                    $('#'+k).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                    $('#'+k).addClass("is-invalid");;
+                  });
+                  $('.ForgetPassword').attr('disabled',false); 
+                  $('.ForgetPassword').html('Next');
+            }
+            else
+            {
+                $.notify(
+                {
+                  icon:"icon-bell-check",
+                  message:data.message
+                },
+                {
+                  type:"success",
+                  delay:1000 
+                });
+                setTimeout ("window.location.href='<?php echo base_url();?>Login/updatepasswordpage'", 3500);
+                $('.ForgetPassword').attr('disabled',false); 
+                $('.ForgetPassword').html('Next');
+
+            }
           },
           error:function(jqXHR, textStatus, errorThrown)
          {
@@ -412,4 +391,3 @@ top :20px !important;
 </body>
 
 </html>
-

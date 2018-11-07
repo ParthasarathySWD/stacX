@@ -28,7 +28,7 @@
 </style>
 
 <div class="card">
-	<div class="card-header card-header-rose card-header-icon">
+	<div class="card-header card-header-danger card-header-icon">
 		<div class="card-icon">
 			<i class="icon-folder-check"></i>
 		</div>
@@ -47,7 +47,7 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#lastviewedlist" role="tablist">
-					Last Viewed Orders 
+					Last Viewed Orders
 				</a>
 			</li>
 		</ul>
@@ -58,7 +58,7 @@
 						<div class="col-md-2">
 							<div class="form-group bmd-form-group">
 								<label for="group" class="bmd-label-floating">Group <span class="mandatory"></span></label>
-								<select class="select2picker form-control" id="group"  name="group">                   
+								<select class="select2picker form-control" id="group"  name="group">
 									<option value="1">All</option>
 									<option value="2">Group 1</option>
 									<option value="3">Group 2</option>
@@ -68,7 +68,7 @@
 						<div class="col-md-2">
 							<div class="form-group bmd-form-group">
 								<label for="group_products" class="bmd-label-floating">Product <span class="mandatory"></span></label>
-								<select class="select2picker form-control" id="group_products"  name="group_products">                   
+								<select class="select2picker form-control" id="group_products"  name="group_products">
 									<option value="1">All</option>
 									<option value="2">Group 1</option>
 									<option value="3">Group 2</option>
@@ -78,8 +78,8 @@
 					<div class="col-md-2">
 						<div class="form-group bmd-form-group">
 							<label for="group_subproducts" class="bmd-label-floating">SubProduct <span class="mandatory"></span></label>
-							<select class="select2picker form-control" id="group_subproducts"  name="group_subproducts">                   
-								<?php if(count($groupsbyloggedid) == 1){ 
+							<select class="select2picker form-control" id="group_subproducts"  name="group_subproducts">
+								<?php if(count($groupsbyloggedid) == 1){
 
 									if(count($Product) == 1){
 										$data = $controller->subproduct_by_group_product($groupsbyloggedid[0]->GroupUID,$Product[0]->ProductUID);
@@ -98,14 +98,14 @@
 								<?php }else{ ?>
 								<option value=""></option>
 
-								<?php } ?> 
+								<?php } ?>
 							</select>
 						</div>
 					</div>
 					<div class="col-md-2">
 						<div class="form-group bmd-form-group">
 							<label for="group_workflows" class="bmd-label-floating">Workflow <span class="mandatory"></span></label>
-							<select class="select2picker form-control" id="group_workflows"  name="group_workflows">                   
+							<select class="select2picker form-control" id="group_workflows"  name="group_workflows">
 									<option value="1">All</option>
 									<option value="2">Group 1</option>
 									<option value="3">Group 2</option>
@@ -129,24 +129,13 @@
 										<tr>
 											<th>Prop No</th>
 											<th>Customer </th>
-											<th>Borrower Name</th>
-											<th>Order Priority</th>
 											<th>Current Status</th>
-											<th>Current Queue</th>
-											<th>Property Address</th>		
-											<th>Property City</th>	
-											<th>Property County</th>	
-											<th>Property State</th>	
-											<th>Zip Code</th>			
-											<th>Product</th>
-											<th>SubProduct</th>
-											<th>SubProduct Code</th>		
-											<th>Assigned Users</th>
-											<th>Workflow Module Completed</th>
-											<th>Due Date</th>
-											<th>Due Past</th>
-											<th>Ordered Date Time</th>
-											<th>Customer Actual Cost</th>	
+											<th>Property Address</th>
+											<th>Property City</th>
+											<th>Property County</th>
+											<th>Property State</th>
+											<th>Zip Code</th>
+											<th>Project</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -216,7 +205,7 @@
 										<div class="form-group">
 											<label for="Remarks" class="bmd-label-floating">Remarks <span class="mandatory"></span> </label>
 											<input type="text" class="form-control"  id="Remarks" name="Remarks" value=""/>
-										</div> 
+										</div>
 									</div>
 								</form>
 							</div>
@@ -264,8 +253,8 @@
 					},
 					// Load data for the table's content from an Ajax source
 					"ajax": {
-						"url": "<?php echo base_url('MyOrders/ajax_list')?>",
-						"type": "POST" 
+						"url": "<?php echo base_url('MyOrders/myorders_ajax_list')?>",
+						"type": "POST"
 					}
 
 				});
@@ -287,7 +276,7 @@
 						},
 
 						columnDefs: [
-						{ 
+						{
 							orderable: false, targets:  "no-sort"}
 							],
 						});
@@ -574,7 +563,7 @@
 							dataType:'json',
 							beforeSend: function(){
 								button.attr("disabled", true);
-								button.html('Loading ...'); 
+								button.html('Loading ...');
 								$('.spinnerclass').addClass("be-loading-active");
 
 							},
@@ -691,13 +680,6 @@
 					});
 
 				});
-				
+
 
 			</script>
-
-
-
-
-
-
-

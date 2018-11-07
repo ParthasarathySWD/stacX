@@ -1412,7 +1412,3 @@ span.jq-dte{
   z-index: 10000 !important;
   top: 0;
 }
-
-.hover-widget:hover {
-    transform: scale(1.1);
-}
