@@ -328,8 +328,8 @@ $(function () {
             e.stopPropagation();
             var OrderUID = $('#OrderUID').val();
 
-            var button = $('#btnraiseexcetion');
-            var button_text = $('#btnraiseexcetion').html();
+            var button = $('.btnraiseexcetion');
+            var button_text = $('.btnraiseexcetion').html();
 
             var formdata = new FormData($(this)[0]);
             formdata.append('OrderUID', OrderUID);
@@ -363,7 +363,70 @@ $(function () {
                         $.notify({ icon: "icon-bell-check", message: data['message'] }, { type: "danger", delay: 1000 });
 
                     }
-                    // button.html(button_text);
+                    button.html(button_text);
+                    button.attr("disabled", false);
+
+                },
+                error: function(jqXHR){
+                    swal({
+                        title: "<i class='icon-close2 icondanger'></i>",
+                        html: "<p>Failed to Complete</p>",
+                        confirmButtonClass: "btn btn-success",
+                        allowOutsideClick: false,
+                        width: '300px',
+                        buttonsStyling: false
+                    }).catch(swal.noop)
+
+
+                }
+            });
+
+
+
+    })
+    
+    $(document).off('submit','#frmclearexception').on('submit','#frmclearexception', function(e){
+
+            e.preventDefault();
+            e.stopPropagation();
+            var OrderUID = $('#OrderUID').val();
+
+            var button = $('.btnclearexception');
+            var button_text = $('.btnclearexception').html();
+
+            var formdata = new FormData($(this)[0]);
+            formdata.append('OrderUID', OrderUID);
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'OrderComplete/ClearException',
+                data: formdata,
+                dataType: 'json',
+                cache: false,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    button.attr("disabled", true);
+                    button.html('<i class=""fa fa-spin fa-spinner"></i> Loading ...'); 
+
+                },
+                success: function (data) {
+                    if (data.validation_error==0) {
+                        /*Sweet Alert MSG*/
+                        swal({
+                            title: "<i class='icon-checkmark2 iconsuccess'></i>",
+                            html: "<p>"+data.message+"</p>",
+                            confirmButtonClass: "btn btn-success",
+                            allowOutsideClick: false,
+                            width: '300px',
+                            buttonsStyling: false
+                        }).catch(swal.noop)                        
+                    }
+                    else{
+                        $.notify({ icon: "icon-bell-check", message: data['message'] }, { type: "danger", delay: 1000 });
+
+                    }
+                    button.html(button_text);
                     button.attr("disabled", false);
 
                 },

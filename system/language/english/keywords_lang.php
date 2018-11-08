@@ -126,7 +126,9 @@ $lang['Customer_Update'] = "Customer Updated Successfully";
 $lang['Stacking_Complete'] = "Stacking Completed";
 $lang['Review_Complete'] = "Review Completed";
 $lang['Exception_Raised'] = "Exception Raised";
+$lang['Exception_Cleared'] = "Exception Cleared";
 $lang['Exception_Raise_Failed'] = "Exception Raise Failed";
+$lang['Exception_Cleared_Failed'] = "Exception Clear Failed";
 
 $lang['Complete_Failed'] = 'Failed to Complete';
 

@@ -27,7 +27,7 @@ class MY_Controller extends MX_Controller {
 
 			$this->loggedid = $this->session->userdata('UserUID');
 			$this->UserName = $this->session->userdata('UserName');
-
+			$this->RoleUID = $this->session->userdata('RoleUID');
 			
 		}
 	}

@@ -88,6 +88,16 @@ class OrderComplete extends MY_Controller {
 			$this->db->trans_begin();
 			$insert = $this->Common_Model->save('tOrderException', $data);
 
+			$tOrders = $this->Common_Model->get_row('tOrders', ['OrderUID' => $OrderUID]);
+
+			if ($tOrders->Temp_StatusUID == '' || in_array($tOrders->StatusUID, [$this->config->item('keywords')['Fatal Exception'], $this->config->item('keywords')['Non Fatal Exception']])) {
+				$this->Common_Model->save('torders', ['Temp_StatusUID' => $tOrders->StatusUID], 'OrderUID', $OrderUID);
+
+			} else {
+				$this->Common_Model->save('torders', ['Temp_StatusUID' => $tOrders->StatusUID], 'OrderUID', $OrderUID);
+			}
+
+
 			if ($exceptiontype == 1) {
 				$StatusUID = $this->config->item('keywords')['Fatal Exception'];
 				$this->Common_Model->save('torders', ['StatusUID'=>$StatusUID], 'OrderUID', $OrderUID);
@@ -122,6 +132,83 @@ class OrderComplete extends MY_Controller {
 				'message' => $Msg,
 				'OrderUID' => form_error('OrderUID'),
 				'exceptiontype' => form_error('exceptiontype'),
+			);
+			foreach ($validation_data as $key => $value) {
+				if (is_null($value) || $value == '')
+					unset($validation_data[$key]);
+			}
+			$this->output->set_content_type('application/json')
+			->set_output(json_encode($validation_data))->_display(); exit;
+
+		}
+
+	}
+
+	public function ClearException()
+	{
+		$OrderUID = $this->input->post('OrderUID');
+		// $ExceptionTypeUID = $this->input->post('ExceptionTypeUID');
+		$Reason = $this->input->post('Reason');
+		$remarks = $this->input->post('remarks');
+
+		$this->load->library('form_validation');
+
+
+		$this->form_validation->set_error_delimiters('', '');
+
+
+		$this->form_validation->set_rules('OrderUID', '', 'required');
+		// $this->form_validation->set_rules('ExceptionTypeUID', '', 'required');
+		$this->form_validation->set_rules('Reason', '', 'required');
+
+		$this->form_validation->set_message('required', 'This Field is required');
+
+		if ($this->form_validation->run() == true) {
+
+			$data['ExceptionRemarks'] = $remarks;
+			$data['ExceptionClearedByUserUID'] = $this->loggedid;
+			$data['ExceptionClearedDateTime'] = date('Y-m-d H:i:s');
+
+			$filter['OrderUID'] = $OrderUID;
+			$filter['IsExceptionCleared'] = 0;
+			$this->db->trans_begin();
+			$update = $this->Common_Model->save('tOrderException', $data, $filter);
+
+			$tOrders = $this->Common_Model->get_row('tOrders', ['OrderUID'=>$OrderUID]);
+
+			if ($tOrders->Temp_StatusUID!='') {
+				$this->Common_Model->save('torders', ['StatusUID'=>$tOrders->Temp_StatusUID], 'OrderUID', $OrderUID);
+				
+			}
+			else{
+				$this->Common_Model->save('torders', ['StatusUID' => $this->config->item('keywords')['Stacking In Progress']], 'OrderUID', $OrderUID);
+			}
+
+			if ($this->db->trans_status()===false) {
+				$this->db->trans_rollback();
+				$Msg = $this->lang->line('Exception_Cleared_Failed');
+				$this->output->set_content_type('application/json')
+					->set_output(json_encode(array('validation_error' => 0, 'message' => $Msg)))->_display();
+				exit;
+			}
+			else{
+				$this->db->trans_commit();
+				$Msg = $this->lang->line('Exception_Cleared');
+				$this->output->set_content_type('application/json')
+					->set_output(json_encode(array('validation_error'=>0, 'message'=>$Msg)))->_display();exit;
+			}
+
+		} else {
+
+			$Msg = $this->lang->line('Empty_Validation');
+
+			$formvalid = [];
+
+			$validation_data = array(
+				'validation_error' => 1,
+				'message' => $Msg,
+				'OrderUID' => form_error('OrderUID'),
+				'Reason' => form_error('Reason'),
 			);
 			foreach ($validation_data as $key => $value) {
 				if (is_null($value) || $value == '')

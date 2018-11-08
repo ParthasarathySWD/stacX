@@ -9,7 +9,7 @@ $OrderDetails = $this->Common_Model->getOrderDetails($OrderUID);
             <a class="nav-link ajaxload <?php if ($this->uri->segment(1) == "Ordersummary") {echo "active";}?>" role="tablist" href="<?php echo base_url() . 'Ordersummary/index/' . $OrderDetails->OrderUID . '/' ?>">Order Info</a>
          </li>
          <li class=" nav-item">
-             <a class="nav-link ajaxload <?php if ($this->uri->segment(1) == "Stacking") {echo "active";}?>" role="tablist" href="<?php echo base_url() . 'Ordersummary/index/' . $OrderDetails->OrderUID . '/' ?>">Stacking</a>
+             <a class="nav-link ajaxload <?php if ($this->uri->segment(1) == "Stacking") {echo "active";}?>" role="tablist" href="<?php echo base_url() . 'Stacking/index/' . $OrderDetails->OrderUID . '/' ?>">Stacking</a>
          </li>
       </ul>
    </div>

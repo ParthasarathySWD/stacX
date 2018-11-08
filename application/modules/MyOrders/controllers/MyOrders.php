@@ -41,13 +41,13 @@ class MyOrders extends MY_Controller {
 		        $row[] = $myorders->OrderNumber;
 		        $row[] = $myorders->CustomerName;
 
+		        $row[] = $myorders->ProjectName;
 		        $row[] = '<a href="#" style=" background: '.$myorders->StatusColor.' !important;" class="btn  btn-round mt-10">'.$myorders->StatusName.'</a>';
 		        $row[] = $myorders->PropertyAddress1.' '.$myorders->PropertyAddress2;
 		        $row[] = $myorders->PropertyCityName;
 		        $row[] = $myorders->PropertyCountyName;
 		        $row[] = $myorders->PropertyStateCode;
 		        $row[] = $myorders->PropertyZipCode;
-		        $row[] = $myorders->ProjectName;
 		        $Action = '<a href="'.base_url('Ordersummary/index/'.$myorders->OrderUID).'" class="btn btn-link btn-info btn-just-icon btn-xs ajaxload">
 							<i class="icon-pencil"></i></a>';
 		        $row[] = $Action;

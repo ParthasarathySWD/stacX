@@ -119,8 +119,14 @@ class MY_Model extends CI_Model {
 		else{
 			if ( !empty($data) && ( is_array($data) || is_object($data) ) && $value != NULL) {
 				$this->db->set($data);
-				$this->db->where($primarykey, $value);
-				$this->db->update($_table_name);
+				if (is_array($primarykey) && empty($value)) {					
+					$this->db->where($primarykey);
+					$this->db->update($_table_name);
+				}
+				else{
+					$this->db->where($primarykey, $value);
+					$this->db->update($_table_name);
+				}
 
 				$id = $value;
 				return $id;			

@@ -23,17 +23,48 @@
             </li>
           </ul>
           <div class="tab-content tab-space">
-            <div class="tab-pane active" id="link1">
-              <?php $this->load->view('orderassign');?>
+            <div class="tab-pane active" id="OrderAssignDiv">
+
             </div>
-            <div class="tab-pane" id="link2">
-              <?php $this->load->view('orderreassign');?>
+            <div class="tab-pane" id="OrderReassignDiv">
+
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <script src="<?php echo base_url(); ?>assets/js/multi-form.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/js/plugins/jquery.bootstrap-wizard.js"  type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        demo.initMaterialWizard();
+  setTimeout(function() {
+    $('.card.card-wizard').addClass('active');
+  }, 600);
+
+          $("#OrderAssignDiv").load('<?php echo base_url("OrderAssignment/loadorderassign")?>');     
+          $("#OrderAssignDiv").slideDown(); 
+
+
+        $("#OrderAssignID").click(function(){
+          $(".tab-pane").hide();
+          $("#OrderAssignDiv").load('<?php echo base_url("OrderAssignment/loadorderassign")?>');     
+          $("#OrderAssignDiv").slideDown(); 
+        });
+
+        $("#OrderReassignID").click(function(){
+          $(".tab-pane").hide();
+          $("#OrderReassignDiv").load('<?php echo base_url("OrderAssignment/loadorderreassign")?>');     
+          $("#OrderReassignDiv").slideDown(); 
+        });
+
+
+
+      });
+</script>
 
 
 

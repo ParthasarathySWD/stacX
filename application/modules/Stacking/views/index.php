@@ -269,6 +269,8 @@
 						<button type="button" class="btn btn-success pull-right" id="stackingcomplete">Stacking Complete</button>
 						<button type="button" class="btn btn-danger pull-right" id="reviewcomplete">Review Complete</button>
 						<button type="button" data-toggle="exception-popover"  class="btn btn-dribble pull-right" id="raiseexception">Raise Exception</button>
+						<button data-placement="bottom" title="Clear Exception" data-toggle="clearexceptionpopover" data-container="body" type="button" data- data-html="true" id="Reverse_workflow" class="btn btn-tumblr "><i class="icon-stats-growth2 pr-1"></i> &nbsp; Clear Exception&nbsp;</button>  
+
                   </div>
                </form>
             </div>
@@ -278,6 +280,9 @@
 </div>
 
 <?php $this->load->view('orderinfoheader/workflowpopover'); ?>
+
+
+
 
 <script src="<?php echo base_url(); ?>assets/plugins/dropify/js/dropify.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/CommonAjax.js" type="text/javascript"></script>
@@ -302,6 +307,27 @@
 			$(".select2picker").select2({
 			theme: "bootstrap",
 			});
+
+
+
+$("[data-toggle=clearexceptionpopover]").popover({
+  html: true, 
+  placement: 'top',
+  content: function() {
+    return $('#clearexceptionpopover-content').html();
+  },
+}); 
+
+$('[data-toggle=clearexceptionpopover]').on('shown.bs.popover', function (e) {
+
+});
+
+
+
+
+/*--- REVERSE WORKFLOW POPOVER JS ENDS ---*/
+
+
 
 
 			$('.changeentry').click(function()
