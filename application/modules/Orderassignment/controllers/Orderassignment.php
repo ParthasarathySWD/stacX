@@ -56,7 +56,7 @@ class OrderAssignment extends MY_Controller {
         $post['draw'] = $this->input->post('draw');
         $post['ProjectUID'] = $this->input->post('ProjectUID');
         $post['OrderUID'] = $this->input->post('OrderUID');
-        if ($post['ProjectUID'] == '' && $post['OrderUID'] != '') {
+        if ($post['ProjectUID'] == 'all' && $post['OrderUID'] != '') {
           $tOrders = $this->Common_Model->get_row('tOrders', 'OrderUID', $OrderUID);
           $post['ProjectUID'] = $tOrders->ProjectUID;
         }

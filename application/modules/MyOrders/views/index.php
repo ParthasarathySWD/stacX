@@ -51,77 +51,44 @@
 				</a>
 			</li>
 		</ul>
+		<?php
+		if($IsGetNextOrder == 1)
+		{ ?>
+			<div class="row" style="margin-top: 10pt;margin-left: 15pt;">
+				<div class="col-md-2">
+					<div class="form-group bmd-form-group">
+						<label for="ProjectUID" class="bmd-label-floating">Project <span class="mandatory"></span></label>
+						<select class="select2picker form-control" id="ProjectUID"  name="ProjectUID">                   
+						    <option value=""></option>
+							<?php 
+							foreach ($Projects as $key => $value) { ?>
+
+								<option value="<?php echo $value->ProjectUID; ?>" ><?php echo $value->ProjectName; ?></option>
+							<?php } ?>
+						</select>
+						</div>
+				</div>
+
+				<div class="col-md-2">
+					<div class="form-group bmd-form-group">
+						<label for="Workflow" class="bmd-label-floating">Workflow<span class="mandatory"></span></label>
+						<select class="select2picker form-control" id="Workflow"  name="Workflow">  
+						<option value=""></option>	
+						<option value="1">Production</option>                 
+						<option value="2">QC Orders</option>               
+						</select>
+					</div>
+				</div>
+				<div class="col-md-2">
+	           		<button type="button" class="btn btn-fill  btn-danger btn-wd getnextorder" ><i class="icon-rotate-ccw2 pr-10"></i>Get Next Order</button>
+				</div>
+			</div>
+		    <div class="ml-auto text-right">
+	        </div>
+		<?php } ?>
+
 		<div class="tab-content tab-space">
 			<div class="tab-pane active" id="orderslist">
-				<?php if($is_selfassign == 1) : ?>
-					<div class="row">
-						<div class="col-md-2">
-							<div class="form-group bmd-form-group">
-								<label for="group" class="bmd-label-floating">Group <span class="mandatory"></span></label>
-								<select class="select2picker form-control" id="group"  name="group">
-									<option value="1">All</option>
-									<option value="2">Group 1</option>
-									<option value="3">Group 2</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="form-group bmd-form-group">
-								<label for="group_products" class="bmd-label-floating">Product <span class="mandatory"></span></label>
-								<select class="select2picker form-control" id="group_products"  name="group_products">
-									<option value="1">All</option>
-									<option value="2">Group 1</option>
-									<option value="3">Group 2</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group bmd-form-group">
-							<label for="group_subproducts" class="bmd-label-floating">SubProduct <span class="mandatory"></span></label>
-							<select class="select2picker form-control" id="group_subproducts"  name="group_subproducts">
-								<?php if(count($groupsbyloggedid) == 1){
-
-									if(count($Product) == 1){
-										$data = $controller->subproduct_by_group_product($groupsbyloggedid[0]->GroupUID,$Product[0]->ProductUID);
-
-										if(count($data[0]) > 0){ ?>
-
-										<option value=""></option>
-										<?php  foreach ($data[0] as $key => $value) { ?>
-										<option value="<?php echo $value->SubProductUID; ?>"><?php echo $value->SubProductName; ?></option>
-
-										<?php }
-									}
-								}
-								?>
-
-								<?php }else{ ?>
-								<option value=""></option>
-
-								<?php } ?>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group bmd-form-group">
-							<label for="group_workflows" class="bmd-label-floating">Workflow <span class="mandatory"></span></label>
-							<select class="select2picker form-control" id="group_workflows"  name="group_workflows">
-									<option value="1">All</option>
-									<option value="2">Group 1</option>
-									<option value="3">Group 2</option>
-							</select>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group bmd-form-group">
-										<button class="btn btn-primary" id="getnextorder"><i class="fa fa-forward" aria-hidden="true"></i> Get Next Order
-											<div class="ripple-container"></div>
-										</button>
-									</div>
-								</div>
-							</div>
-						<?php endif; ?>
-
 						<div class="col-md-12 col-xs-12">
 							<div class="material-datatables" id="myordertable_parent">
 								<table class="table table-striped display nowrap" id="myordertable"  cellspacing="0" width="100%"  style="width:100%">
@@ -678,6 +645,65 @@
 			});
 
 					});
+
+
+			$(document).on('click','.getnextorder',function(){
+
+				var ProjectUID = $('#ProjectUID option:selected').val();
+				var Workflow = $('#Workflow option:selected').val();
+
+			    $.ajax({
+
+					type: "POST",
+					url: '<?php echo base_url(); ?>MyOrders/GetNextOrder',
+					data:{'ProjectUID':ProjectUID,'Workflow':Workflow},
+					dataType:'json',
+					beforeSend: function(){
+
+					},
+					success: function(data)
+					{
+				 		  if(data.validation_error == 1)
+				            {
+								  $.notify(
+					              {
+					                icon:"icon-bell-check",
+					                message:data.message
+					              },
+					              {
+					                type:data.color,
+					                delay:1000 
+					              });
+					        $.each(data, function(k, v) {
+								$('#'+k).addClass("is-invalid").closest('.form-group').removeClass('has-success').addClass('has-danger');
+								$('#'+ k +'.select2picker').next().find('span.select2-selection').addClass('errordisplay');
+
+							});
+				           }else{
+
+				           		  $.notify(
+					              {
+					                icon:"icon-bell-check",
+					                message:data.message
+					              },
+					              {
+					                type:data.color,
+					                delay:1000 
+					              });
+				           }
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(errorThrown);
+						
+					},
+					failure: function (jqXHR, textStatus, errorThrown) {
+						
+						console.log(errorThrown);
+						
+					},
+				});
+			});
 
 				});
 

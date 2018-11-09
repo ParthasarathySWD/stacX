@@ -10,26 +10,15 @@
 <div class="card">
 	<div class="card-body">
 		<div class="row col-md-12">
-<!-- 			<div class="col-md-4">
-				<div class="form-group bmd-form-group">
-					<label for="Customer" class="bmd-label-floating">Customer<span class="mandatory"></span></label>
-					<select class="select2picker form-control"  id="Customer" name="Customer" required>
-						<option value=""></option>
-						<?php foreach ($Customers as $key => $value) { ?>
-							<option value="<?php echo $value->CustomerUID; ?>"><?php echo $value->CustomerName; ?></option>
-						<?php } ?>								
-					</select>
-				</div>
-			</div> -->
+
 			<div class="col-md-4">
 
 				<div class="form-group  bmd-form-group">
 					<label for="Project" class="bmd-label-floating">Project</label>
-					<select class="select2picker form-control"  id="Project"  name="Project" >
+					<select class="select2picker form-control"  id="assignmentproject"  name="assignmentproject" >
 						<option value="all" selected>All</option>
 						<?php foreach ($Projects as $key => $project) {?> 
-							<option value="<?php echo $project->Project; ?>"><?php echo $project->ProjectName;?>                               
-						</option>
+							<option value="<?php echo $project->ProjectUID; ?>"><?php echo $project->ProjectName;?></option>
 						<?php } ?>       
 					</select>
 				</div>
@@ -67,7 +56,7 @@
 				<div class="col-md-3">
 					<div class="form-group bmd-form-group">
 						<label class="control-label"><b><?php echo $value; ?></b></label>
-						<select class="select2picker workflowusers" id="<?php echo $Workflow->WorkflowModuleUID; ?>" data-id="<?php echo $Workflow->key; ?>">
+						<select class="select2picker workflowusers" id="<?php echo $value; ?>" data-id="<?php echo $key; ?>">
 							<option value=""></option>
 
 						</select>
@@ -94,12 +83,13 @@
 			theme: "bootstrap",
 		});
 		var assignment_table = '';
-		var SelectedProject = $('#Project').val();
+		var SelectedProject = $('#assignmentproject').val();
 
 		fn_orderassigntable_init(SelectedProject);
 
-		$('#Project').on('change', function (e) {
-			var SelectedProject = $('#Project').val();
+		$('#assignmentproject').on('change', function (e) {
+			var SelectedProject = $(this).val();
+			
 			fn_orderassigntable_destroy();
 			fn_orderassigntable_init(SelectedProject);
 		});
@@ -109,14 +99,14 @@
 			var checkbox_count = $("input[name='input_assigncheckbox']:checked").length;
 			if(checkbox_count == 1 && $(this).prop('checked') == true){
 
-				var SelectedProject = $('#Project').val();
+				var SelectedProject = $('#assignmentproject').val();
 				var OrderUID = $(this).attr('data-OrderUID');
 				var obj = {"OrderUID":OrderUID};
 
 				$.ajax({
 					type: "POST",
 					url: "Orderassignment/GetProjectUsers",
-					data: "{'OrderUID':OrderUID}",
+					data: {'OrderUID':OrderUID},
 					dataType: "json",
 					success: function (response) {
 						
@@ -129,13 +119,52 @@
 			else if(checkbox_count == 0 && $(this).prop('checked') == false){
 
 				$('.workflowusers').html('<option value=""></option>');
-				var SelectedProject = $('#Project').val();
+				var SelectedProject = $('#assignmentproject').val();
 				var OrderUID = '';
 				var obj = {"OrderUID":OrderUID};
 				fn_orderassigntable_destroy();
 				fn_orderassigntable_init.call(obj, SelectedProject);
 			}
 		});
+		
+
+		$(document).on('click','.assignorder', function(e) {
+			var checkedorders = $("input[name='input_assigncheckbox']:checked");
+			alert();
+			var OrderUIDs = [];
+			$(checkedorders).each(function (key, value) {
+				OrderUIDs.push($(value).attr('data-OrderUID'));
+			  });
+
+			var Production = $('#Production').val();
+			var Qc = $('#Qc').val();
+			  
+			console.log(OrderUIDs);
+			if(OrderUIDs.length != 0 && Production && Qc){
+
+				var SelectedProject = $('#assignmentproject').val();
+				var OrderUID = $(this).attr('data-OrderUID');
+				var obj = {"OrderUID":OrderUID};
+
+				$.ajax({
+					type: "POST",
+					url: "Orderassignment/assignorder",
+					data: {'OrderUID':OrderUIDs, 'Production':Production, 'Qc':Qc},
+					dataType: "json",
+					success: function (response) {
+						
+						$('.workflowusers').append(response.html);
+						fn_orderassigntable_destroy();
+						fn_orderassigntable_init.call(obj, SelectedProject);
+					}
+				});
+			}
+			else{
+
+			}
+		});
+		
+
 
 	});//Document Load Complete
 
@@ -149,6 +178,7 @@
 			else{
 				var OrderUID = this.OrderUID;
 			}
+			
 			assignment_table = $('#orderassigntable').DataTable( {
 				processing: true, //Feature control the processing indicator.
 				serverSide: true, //Feature control DataTables' server-side processing mode.

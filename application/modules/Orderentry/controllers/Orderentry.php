@@ -950,6 +950,26 @@ function save_bulkentry()
 
 
 
+
+public function bulkentrypreviewfile()
+{
+	$filepath = FCPATH.'assets/previewfile/bulkformat.xlsx';
+	if (ob_get_contents()) ob_end_clean();
+	header("Content-Description: File Transfer");
+	header("Content-Type: application/octet-stream");
+	header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
+	header("Content-Transfer-Encoding: binary");
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header("Content-Type: application/force-download");
+	header("Content-Type: application/download");
+	header("Content-Length: ".filesize($filepath));
+	readfile($filepath);
+	ob_clean();
+	exit;
+}
+
 	/* ---- EXCEL BULK ENTRY ENDS --- */
 
 

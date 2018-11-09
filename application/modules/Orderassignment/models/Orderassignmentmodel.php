@@ -124,7 +124,7 @@ class Orderassignmentmodel extends MY_Model {
         }
 
         if (!empty($post['ProjectUID']) && $post['ProjectUID']!='all') {
-        	$this->db->where('torders.ProjectUID', $post['ProjectUID']);
+        	$this->db->where('tOrders.ProjectUID', $post['ProjectUID']);
         }
 
         if (!empty($post['order'])) 
